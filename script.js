@@ -86,7 +86,10 @@ console.log(spacesArr);
 //////////////////////
 
 //Functions Here:
-
+jumpPos = (ply, sendTo) => {
+  sendTo.appendChild(ply);
+};
+jumpPos(p1, spc13);
 //////////////////////
 
 // Click Events Here:
