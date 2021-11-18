@@ -1,0 +1,66 @@
+body {
+  display: grid;
+  grid-template-columns: 1fr 98vh 1fr;
+  grid-template-rows: 98vh;
+}
+
+#play2disp {
+  background-color: rgb(250, 214, 214);
+}
+
+#play1disp {
+  background-color: rgb(231, 231, 255);
+}
+
+#gameBoard {
+  display: grid;
+  grid-template-columns: 1fr 63vh 1fr;
+  grid-template-rows: 1fr 63vh 1fr;
+}
+
+#boardCenter {
+  background-color: lightyellow;
+  border: 2px solid black;
+}
+
+.tbSides {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.lrSides {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+}
+
+#freePark {
+  background-color: tomato;
+}
+
+#goJail {
+  background-color: lightskyblue;
+}
+
+#jail {
+  background-color: orange;
+}
+
+#go {
+  background-color: turquoise;
+}
+
+.spaces {
+  border: 2px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#boardCenter {
+  font-size: 6vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
