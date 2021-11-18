@@ -18,11 +18,15 @@ A JavaScript Monopoly Clone
 
 This is a browser-based Monopoly Program written in JavaScript which I coded two weeks after being introduced to HTML, CSS, and JavaScript.
 
+#### [Trello Board](https://trello.com/b/yI0quoOg/monopoly-build)
+
 ---
 
 ## **_Screenshots_**
 
+Game Board Mock-up:
 ![**mockup**](resources/mockUp.jpeg)
+(will update this to include screenshots of the game upon completion)
 
 ---
 
@@ -37,7 +41,14 @@ This is a browser-based Monopoly Program written in JavaScript which I coded two
 ## **_Roadmap (Future Updates)_**
 
 - ~~Write a proffesional ReadMe~~
-- Add Bonus Challenges
+- Write CSS and HTML for basic gameboard structure
+- Write HTML for start page (where users enter player names)
+- Write HTML for event page?
+- Write HTML for property page
+- Write JS OOP to create player classes based on user input
+- Write JS OOP to create property classes
+- Write JS to create each property class quickly referencing Monopoly game
+- Write JS for rollDice, movePlayer, offerToBuy, function
 
 ---
 
