@@ -107,18 +107,29 @@ createNot = (message) => {
   notMsg.innerText = message;
   notBox.style.opacity = 1;
 };
-
-createNot('You landed on go, collect $200');
+// createNot('You landed on go, collect $200');
 
 jumpPos = (ply, newPos) => {
   newPos.appendChild(ply.token);
 };
 
+checkSpc = (ply) => {
+  if (ply.curPos === 0) {
+    createNot('You landed on go, collect an extra $200');
+    ply.bankAcc += 200;
+    console.log(ply.bankAcc);
+  }
+  if (ply.curPos === 30) {
+  }
+};
+
 rollDice = (ply) => {
-  let dice1 = Math.ceil(Math.random() * 6);
-  let dice2 = Math.ceil(Math.random() * 6);
-  let roll = dice1 + dice2;
-  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  notBox.style.opacity = 0;
+  // let dice1 = Math.ceil(Math.random() * 6);
+  // let dice2 = Math.ceil(Math.random() * 6);
+  // let roll = dice1 + dice2;
+  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  let roll = 10;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
@@ -126,6 +137,7 @@ rollDice = (ply) => {
   } else {
     spacesArr[ply.curPos].appendChild(ply.token);
   }
+  checkSpc(ply);
 };
 
 //////////////////////
