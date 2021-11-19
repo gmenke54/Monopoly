@@ -107,7 +107,7 @@ class player {
 let p1 = new player(token1, 'Allegra');
 let p2 = new player(token2, 'Grant');
 
-class property {
+class colProperty {
   constructor(name, cost, spaceNum) {
     this.name = name;
     this.cost = cost;
@@ -118,11 +118,11 @@ class property {
     this.curHouses = 0;
   }
 }
-let medit = new property('Mediteranean Avenue', 60, 1);
-let baltic = new property('Baltic Avenue', 60, 3);
-let oriental = new property('Oriental Avenue', 100, 6);
-let vermont = new property('Vermont Avenue', 100, 8);
-let connet = new property('Conneticut Avenue', 120, 9);
+let medit = new colProperty('Mediteranean Avenue', 60, 1);
+let baltic = new colProperty('Baltic Avenue', 60, 3);
+let oriental = new colProperty('Oriental Avenue', 100, 6);
+let vermont = new colProperty('Vermont Avenue', 100, 8);
+let connet = new colProperty('Conneticut Avenue', 120, 9);
 //////////////////////
 
 //Functions Here:
@@ -132,13 +132,19 @@ createNot = (message) => {
   notBox.style.opacity = 1;
 };
 
-jumpPos = (ply, newPos) => {
-  spacesArr[newPos].appendChild(ply.token);
-  ply.curPos = newPos;
-  // checkSpc(ply);
-  // if (ply.curPos !== 10) {
-  //   checkSpc(ply);
-  // }
+pauseJumpPos = (ply, newPos) => {
+  setTimeout(
+    (jumpPos = () => {
+      spacesArr[newPos].appendChild(ply.token);
+      ply.curPos = newPos;
+      if (ply.curPos !== 10) {
+        checkSpc(ply);
+      } else {
+        ply.jailCount += 1;
+      }
+    }),
+    3000
+  );
 };
 
 checkSpc = (ply) => {
@@ -148,7 +154,8 @@ checkSpc = (ply) => {
   }
   if (ply.curPos === 30) {
     createNot('Go directly to jail. Do not pass go. Do not collect $200.');
-    jumpPos(ply, 10);
+    // add settimeout here
+    pauseJumpPos(ply, 10);
   }
   if (ply.curPos === 4) {
     createNot('You must pay income taxes. Pay $200.');
@@ -177,10 +184,11 @@ checkSpc = (ply) => {
 rollDice = (ply) => {
   // diceStatus = 'off';
   notBox.style.opacity = 0;
-  let dice1 = Math.ceil(Math.random() * 6);
-  let dice2 = Math.ceil(Math.random() * 6);
-  let roll = dice1 + dice2;
-  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  // let dice1 = Math.ceil(Math.random() * 6);
+  // let dice2 = Math.ceil(Math.random() * 6);
+  // let roll = dice1 + dice2;
+  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  let roll = 30;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
