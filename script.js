@@ -104,7 +104,11 @@ jumpPos = (ply, newPos) => {
   newPos.appendChild(ply.token);
 };
 
-advPos = (ply, roll) => {
+rollDice = (ply) => {
+  let dice1 = Math.ceil(Math.random() * 6);
+  let dice2 = Math.ceil(Math.random() * 6);
+  let roll = dice1 + dice2;
+  console.log(dice1, dice2);
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
@@ -112,14 +116,14 @@ advPos = (ply, roll) => {
   } else {
     spacesArr[ply.curPos].appendChild(ply.token);
   }
-  console.log(ply.curPos);
 };
-
 //
 
 // rollDice =
 //////////////////////
 
 // Click Events Here:
-
+rollBtn.addEventListener('click', () => {
+  rollDice(player1);
+});
 //////////////////////
