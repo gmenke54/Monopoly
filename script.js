@@ -90,18 +90,39 @@ const token1 = document.getElementById('token1');
 const token2 = document.getElementById('token2');
 
 class player {
-  constructor(tokenNum) {
+  constructor(tokenNum, persName) {
+    this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
     this.bankAcc = 1500;
+    this.propsOwned = [];
+    this.totPropsVal = 0;
+    this.totVal = this.bankAcc + this.totPropsVal;
+    this.jailCount = 0;
   }
   // buyProp(prop) {
   //  add logic here
   // }
 }
-let p1 = new player(token1);
-let p2 = new player(token2);
+let p1 = new player(token1, 'Allegra');
+let p2 = new player(token2, 'Grant');
 
+class property {
+  constructor(name, cost, spaceNum) {
+    this.name = name;
+    this.cost = cost;
+    this.rent = Math.ceil(this.cost / 13);
+    this.spc = spacesArr[spaceNum];
+    this.ownStatus = 'available';
+    this.houseCost = 100;
+    this.curHouses = 0;
+  }
+}
+let medit = new property('Mediteranean Avenue', 60, 1);
+let baltic = new property('Baltic Avenue', 60, 3);
+let oriental = new property('Oriental Avenue', 100, 6);
+let vermont = new property('Vermont Avenue', 100, 8);
+let connet = new property('Conneticut Avenue', 120, 9);
 //////////////////////
 
 //Functions Here:
@@ -114,6 +135,7 @@ createNot = (message) => {
 jumpPos = (ply, newPos) => {
   spacesArr[newPos].appendChild(ply.token);
   ply.curPos = newPos;
+  // checkSpc(ply);
   // if (ply.curPos !== 10) {
   //   checkSpc(ply);
   // }
