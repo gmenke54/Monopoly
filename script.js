@@ -87,6 +87,7 @@ const notBox = document.getElementById('noticeBox');
 const notMsg = document.getElementById('noticeMessage');
 
 const token1 = document.getElementById('token1');
+const token2 = document.getElementById('token2');
 
 class player {
   constructor(tokenNum) {
@@ -99,6 +100,7 @@ class player {
   // }
 }
 let p1 = new player(token1);
+let p2 = new player(token2);
 
 //////////////////////
 
