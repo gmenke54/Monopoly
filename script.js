@@ -108,7 +108,7 @@ rollDice = (ply) => {
   let dice1 = Math.ceil(Math.random() * 6);
   let dice2 = Math.ceil(Math.random() * 6);
   let roll = dice1 + dice2;
-  console.log(dice1, dice2);
+  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
@@ -117,9 +117,7 @@ rollDice = (ply) => {
     spacesArr[ply.curPos].appendChild(ply.token);
   }
 };
-//
 
-// rollDice =
 //////////////////////
 
 // Click Events Here:
