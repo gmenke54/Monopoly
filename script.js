@@ -100,9 +100,6 @@ class player {
     this.totVal = this.bankAcc + this.totPropsVal;
     this.jailCount = 0;
   }
-  // buyProp(prop) {
-  //  add logic here
-  // }
 }
 let p1 = new player(token1, 'Allegra');
 let p2 = new player(token2, 'Grant');
@@ -166,20 +163,11 @@ buyProp = (ply, prop) => {
   prop.isOwned = true;
   prop.owner = ply;
 };
-// ASK michael why this function sends the object class instead of the object name into the array
-// => because im dropping in the whole prop
-// buyProp(p1, baltic);
-// buyProp(p1, medit);
-// buyProp(p1, oriental);
-// console.log(p1.propsOwned);
-// => now this returns an array of all the names of owned properties
-// console.log(p1.bankAcc);
 
 payRent = (curPly, owner, prop) => {
   curPly.bankAcc -= prop.rent;
   owner.bankAcc += prop.rent;
 };
-// payRent(p1, p2, baltic);
 
 checkOwned = (ply) => {
   let propIndex = ply.curPos;
@@ -192,8 +180,6 @@ checkOwned = (ply) => {
     buyProp(ply, property);
   }
 };
-// p1.curPos = 3;
-// checkOwned(p1);
 
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
