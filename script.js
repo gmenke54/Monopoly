@@ -155,11 +155,10 @@ checkSpc = (ply) => {
 rollDice = (ply) => {
   // diceStatus = 'off';
   notBox.style.opacity = 0;
-  // let dice1 = Math.ceil(Math.random() * 6);
-  // let dice2 = Math.ceil(Math.random() * 6);
-  // let roll = dice1 + dice2;
-  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  let roll = 22;
+  let dice1 = Math.ceil(Math.random() * 6);
+  let dice2 = Math.ceil(Math.random() * 6);
+  let roll = dice1 + dice2;
+  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
@@ -173,9 +172,14 @@ rollDice = (ply) => {
 //////////////////////
 
 // Click Events Here:
-rollBtn.addEventListener('click', () => {
+rollBtn1.addEventListener('click', () => {
   if (diceStatus === 'on') {
     rollDice(p1);
+  }
+});
+rollBtn2.addEventListener('click', () => {
+  if (diceStatus === 'on') {
+    rollDice(p2);
   }
 });
 clearCardBtn.addEventListener('click', () => {
