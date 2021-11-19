@@ -134,8 +134,8 @@ rollDice = (ply) => {
 rollBtn.addEventListener('click', () => {
   rollDice(p1);
 });
-// clearCardBtn.addEventListener('click', () => {
-//   notBox.style.opacity = 0;
-// });
+clearCardBtn.addEventListener('click', () => {
+  notBox.style.opacity = 0;
+});
 
 //////////////////////
