@@ -82,6 +82,9 @@ let spacesArr = [
   spc40
 ];
 
+const notBox = document.getElementById('noticeBox');
+const notMsg = document.getElementById('noticeMessage');
+
 const token1 = document.getElementById('token1');
 
 class player {
@@ -99,6 +102,13 @@ let p1 = new player(token1);
 //////////////////////
 
 //Functions Here:
+
+createNot = (message) => {
+  notMsg.innerText = message;
+  notBox.style.opacity = 1;
+};
+
+createNot('You landed on go, collect $200');
 
 jumpPos = (ply, newPos) => {
   newPos.appendChild(ply.token);
@@ -124,5 +134,8 @@ rollDice = (ply) => {
 rollBtn.addEventListener('click', () => {
   rollDice(p1);
 });
+// clearCardBtn.addEventListener('click', () => {
+//   notBox.style.opacity = 0;
+// });
 
 //////////////////////
