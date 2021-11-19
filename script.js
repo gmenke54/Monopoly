@@ -135,17 +135,27 @@ createNot = (message) => {
 pauseJumpPos = (ply, newPos) => {
   setTimeout(
     (jumpPos = () => {
+      notBox.style.opacity = 0;
       spacesArr[newPos].appendChild(ply.token);
       ply.curPos = newPos;
-      if (ply.curPos !== 10) {
-        checkSpc(ply);
-      } else {
-        ply.jailCount += 1;
-      }
+      checkSpc(ply);
     }),
     3000
   );
 };
+
+buyProp = (ply, prop) => {
+  ply.bankAcc -= prop.cost;
+  ply.propsOwned.push(prop);
+  prop.ownStatus = 'owned';
+};
+
+// ASK michael why this function sends the object class instead of the object name into the array
+buyProp(p1, baltic);
+buyProp(p1, medit);
+buyProp(p1, oriental);
+console.log(p1.propsOwned);
+console.log(p1.bankAcc);
 
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
@@ -163,6 +173,11 @@ checkSpc = (ply) => {
   }
   if (ply.curPos === 10) {
     createNot('You are just visiting jail.');
+    //  FIX JAIL LOGIC HERE:
+    //  if (ply.curPos !== 10) {
+    //   checkSpc(ply);
+    // } else {
+    //   ply.jailCount += 1;
   }
   if (ply.curPos === 38) {
     createNot('You must pay luxury taxes. Pay $100.');
@@ -170,11 +185,11 @@ checkSpc = (ply) => {
   }
   if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
-      'You landed on a chance space. You will now be redirected to a random space on the board. Good luck!'
+      'You landed on a chance space. You will now be move forward to a random space on the board. Good luck!'
     );
     let randomSpc = Math.floor(Math.random() * 39);
     console.log(randomSpc);
-    jumpPos(ply, randomSpc);
+    pauseJumpPos(ply, randomSpc);
   }
   if (ply.cur === 20) {
     createNot('Relax! Nothing happens.');
@@ -182,13 +197,12 @@ checkSpc = (ply) => {
 };
 
 rollDice = (ply) => {
-  // diceStatus = 'off';
   notBox.style.opacity = 0;
-  // let dice1 = Math.ceil(Math.random() * 6);
-  // let dice2 = Math.ceil(Math.random() * 6);
-  // let roll = dice1 + dice2;
-  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  let roll = 30;
+  let dice1 = Math.ceil(Math.random() * 6);
+  let dice2 = Math.ceil(Math.random() * 6);
+  let roll = dice1 + dice2;
+  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  // let roll = 30;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
@@ -214,7 +228,7 @@ rollBtn2.addEventListener('click', () => {
 });
 clearCardBtn.addEventListener('click', () => {
   notBox.style.opacity = 0;
-  // diceStatus = 'on';
+  // add clearTimeout(timeoutID) here referencing the id of the pauseJumpPos ID
 });
 
 //////////////////////
