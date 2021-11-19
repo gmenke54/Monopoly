@@ -1,5 +1,4 @@
 //Global Variables Here:
-const p1 = document.getElementById('token1');
 const spc1 = document.getElementById('go');
 const spc2 = document.querySelector('#botProps').children[8];
 const spc3 = document.querySelector('#botProps').children[7];
@@ -82,14 +81,43 @@ let spacesArr = [
   spc39,
   spc40
 ];
-console.log(spacesArr);
+
+const token1 = document.getElementById('token1');
+
+class player {
+  constructor(tokenNum) {
+    this.token = tokenNum;
+    this.curPos = 0;
+    this.bankAcc = 1500;
+  }
+  // buyProp(prop) {
+  //  add logic here
+  // }
+}
+let player1 = new player(token1);
+
 //////////////////////
 
 //Functions Here:
-jumpPos = (ply, sendTo) => {
-  sendTo.appendChild(ply);
+
+jumpPos = (ply, newPos) => {
+  newPos.appendChild(ply.token);
 };
-jumpPos(p1, spc13);
+
+advPos = (ply, roll) => {
+  ply.curPos += roll;
+  if (ply.curPos >= spacesArr.length) {
+    ply.curPos -= 40;
+    spacesArr[ply.curPos].appendChild(ply.token);
+  } else {
+    spacesArr[ply.curPos].appendChild(ply.token);
+  }
+  console.log(ply.curPos);
+};
+
+//
+
+// rollDice =
 //////////////////////
 
 // Click Events Here:
