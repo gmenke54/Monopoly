@@ -149,50 +149,64 @@ buyProp = (ply, prop) => {
   ply.propsOwned.push(prop);
   prop.ownStatus = 'owned';
 };
+// // ASK michael why this function sends the object class instead of the object name into the array
+// buyProp(p1, baltic);
+// buyProp(p1, medit);
+// buyProp(p1, oriental);
+// // console.log(p1.propsOwned);
+// // console.log(p1.bankAcc);
 
-// ASK michael why this function sends the object class instead of the object name into the array
-buyProp(p1, baltic);
-buyProp(p1, medit);
-buyProp(p1, oriental);
-console.log(p1.propsOwned);
-console.log(p1.bankAcc);
+payRent = (curPly, owner, prop) => {
+  curPly.bankAcc -= prop.rent;
+  owner.bankAcc += prop.rent;
+};
+payRent(p1, p2, baltic);
+
+// checkOwned = (ply, prop) => {
+//   let curSpc = spacesArr[prop];
+//   let propStatus = colProperty.curSpc;
+//   if (propStatus === 'owned'){
+//     payRent(currentPly, owner);
+//   } else {
+//     buyProp(ply, prop)
+//   }
+// };
+// p2.curPos = 3;
+// console.log(baltic.spc);
+// console.log(spacesArr[p2.curPos]);
+// checkOwned(p2);
 
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
     createNot('You landed on go, collect an extra $200.');
     ply.bankAcc += 200;
-  }
-  if (ply.curPos === 30) {
+  } else if (ply.curPos === 30) {
     createNot('Go directly to jail. Do not pass go. Do not collect $200.');
-    // add settimeout here
-    pauseJumpPos(ply, 10);
-  }
-  if (ply.curPos === 4) {
-    createNot('You must pay income taxes. Pay $200.');
-    ply.bankAcc -= 200;
-  }
-  if (ply.curPos === 10) {
-    createNot('You are just visiting jail.');
     //  FIX JAIL LOGIC HERE:
     //  if (ply.curPos !== 10) {
     //   checkSpc(ply);
     // } else {
     //   ply.jailCount += 1;
-  }
-  if (ply.curPos === 38) {
+    pauseJumpPos(ply, 10);
+  } else if (ply.curPos === 4) {
+    createNot('You must pay income taxes. Pay $200.');
+    ply.bankAcc -= 200;
+  } else if (ply.curPos === 10) {
+    createNot('You are just visiting jail.');
+  } else if (ply.curPos === 38) {
     createNot('You must pay luxury taxes. Pay $100.');
     ply.bankAcc -= 100;
-  }
-  if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
+  } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
       'You landed on a chance space. You will now be move forward to a random space on the board. Good luck!'
     );
     let randomSpc = Math.floor(Math.random() * 39);
     console.log(randomSpc);
     pauseJumpPos(ply, randomSpc);
-  }
-  if (ply.cur === 20) {
+  } else if (ply.cur === 20) {
     createNot('Relax! Nothing happens.');
+  } else {
+    checkOwned(ply);
   }
 };
 
