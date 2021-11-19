@@ -111,6 +111,10 @@ createNot = (message) => {
 
 jumpPos = (ply, newPos) => {
   spacesArr[newPos].appendChild(ply.token);
+  ply.curPos = newPos;
+  // if (ply.curPos !== 10) {
+  //   checkSpc(ply);
+  // }
 };
 
 checkSpc = (ply) => {
@@ -133,6 +137,17 @@ checkSpc = (ply) => {
     createNot('You must pay luxury taxes. Pay $100.');
     ply.bankAcc -= 100;
   }
+  if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
+    createNot(
+      'You landed on a chance space. You will now be redirected to a random space on the board. Good luck!'
+    );
+    let randomSpc = Math.floor(Math.random() * 39);
+    console.log(randomSpc);
+    jumpPos(ply, randomSpc);
+  }
+  if (ply.cur === 20) {
+    createNot('Relax! Nothing happens.');
+  }
 };
 
 rollDice = (ply) => {
@@ -142,7 +157,7 @@ rollDice = (ply) => {
   // let dice2 = Math.ceil(Math.random() * 6);
   // let roll = dice1 + dice2;
   // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  let roll = 38;
+  let roll = 22;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
