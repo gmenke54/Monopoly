@@ -94,7 +94,7 @@ class player {
   //  add logic here
   // }
 }
-let player1 = new player(token1);
+let p1 = new player(token1);
 
 //////////////////////
 
@@ -122,6 +122,7 @@ rollDice = (ply) => {
 
 // Click Events Here:
 rollBtn.addEventListener('click', () => {
-  rollDice(player1);
+  rollDice(p1);
 });
+
 //////////////////////
