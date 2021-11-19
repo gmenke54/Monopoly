@@ -113,9 +113,10 @@ class colProperty {
     this.cost = cost;
     this.rent = Math.ceil(this.cost / 13);
     this.spc = spacesArr[spaceNum];
-    this.ownStatus = 'available';
+    this.isOwned = false;
     this.houseCost = 100;
     this.curHouses = 0;
+    this.owner = null;
   }
 }
 let medit = new colProperty('Mediteranean Avenue', 60, 1);
@@ -123,6 +124,20 @@ let baltic = new colProperty('Baltic Avenue', 60, 3);
 let oriental = new colProperty('Oriental Avenue', 100, 6);
 let vermont = new colProperty('Vermont Avenue', 100, 8);
 let connet = new colProperty('Conneticut Avenue', 120, 9);
+
+let propsArr = [
+  'go',
+  medit,
+  'CC',
+  baltic,
+  'IT',
+  'RR',
+  oriental,
+  'chance',
+  vermont,
+  connet,
+  'jail'
+];
 //////////////////////
 
 //Functions Here:
@@ -146,35 +161,39 @@ pauseJumpPos = (ply, newPos) => {
 
 buyProp = (ply, prop) => {
   ply.bankAcc -= prop.cost;
-  ply.propsOwned.push(prop);
-  prop.ownStatus = 'owned';
+  ply.totVal = ply.bankAcc;
+  ply.propsOwned.push(prop.name);
+  prop.isOwned = true;
+  prop.owner = ply;
 };
-// // ASK michael why this function sends the object class instead of the object name into the array
+// ASK michael why this function sends the object class instead of the object name into the array
+// => because im dropping in the whole prop
 // buyProp(p1, baltic);
 // buyProp(p1, medit);
 // buyProp(p1, oriental);
-// // console.log(p1.propsOwned);
-// // console.log(p1.bankAcc);
+// console.log(p1.propsOwned);
+// => now this returns an array of all the names of owned properties
+// console.log(p1.bankAcc);
 
 payRent = (curPly, owner, prop) => {
   curPly.bankAcc -= prop.rent;
   owner.bankAcc += prop.rent;
 };
-payRent(p1, p2, baltic);
+// payRent(p1, p2, baltic);
 
-// checkOwned = (ply, prop) => {
-//   let curSpc = spacesArr[prop];
-//   let propStatus = colProperty.curSpc;
-//   if (propStatus === 'owned'){
-//     payRent(currentPly, owner);
-//   } else {
-//     buyProp(ply, prop)
-//   }
-// };
-// p2.curPos = 3;
-// console.log(baltic.spc);
-// console.log(spacesArr[p2.curPos]);
-// checkOwned(p2);
+checkOwned = (ply) => {
+  let propIndex = ply.curPos;
+  let property = propsArr[propIndex];
+  let propIsOwned = property.isOwned;
+  let owner = property.owner;
+  if (propIsOwned === true && ply !== owner) {
+    payRent(ply, owner, property);
+  } else if (propIsOwned === false) {
+    buyProp(ply, property);
+  }
+};
+// p1.curPos = 3;
+// checkOwned(p1);
 
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
