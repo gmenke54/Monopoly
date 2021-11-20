@@ -215,6 +215,11 @@ let propsArr = [
   'LT',
   boardW
 ];
+
+let currTurn = 'p1';
+const rollBtn1 = document.querySelector('#rollBtn1');
+const rollBtn2 = document.querySelector('#rollBtn2');
+rollBtn2.style.opacity = 0;
 //////////////////////
 
 //Functions Here:
@@ -312,8 +317,25 @@ checkSpc = (ply) => {
     let randomSpc = Math.floor(Math.random() * 39);
     console.log(randomSpc);
     pauseJumpPos(ply, randomSpc);
-  } else if (ply.cur === 20) {
-    createNot('Relax! Nothing happens.');
+  } else if (ply.curPos === 20) {
+    createNot('You landed on Free Parking. Relax! Nothing happens.');
+  } else if (ply.curPos === 2 || ply.curPos === 17 || ply.curPos === 33) {
+    let randomGain = Math.ceil(Math.random() * 150);
+    let randomLoss = Math.ceil(Math.random() * 100);
+    let fateDecider = Math.ceil(Math.random() * 2);
+    if (fateDecider === 1) {
+      createNot(
+        `You landed on Community Chest and today is your lucky day. Collect $${randomGain}!`
+      );
+      ply.bankAcc += randomGain;
+      dispMoney(ply);
+    } else if (fateDecider === 2) {
+      createNot(
+        `Uh-oh! You landed on Community Chest and it's empty. Pay $${randomLoss}.`
+      );
+      ply.bankAcc -= randomLoss;
+      dispMoney(ply);
+    }
   } else {
     checkOwned(ply);
   }
@@ -321,10 +343,11 @@ checkSpc = (ply) => {
 
 rollDice = (ply) => {
   notBox.style.opacity = 0;
-  let dice1 = Math.ceil(Math.random() * 6);
-  let dice2 = Math.ceil(Math.random() * 6);
-  let roll = dice1 + dice2;
-  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  // let dice1 = Math.ceil(Math.random() * 6);
+  // let dice2 = Math.ceil(Math.random() * 6);
+  // let roll = dice1 + dice2;
+  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  let roll = 2;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
@@ -349,15 +372,17 @@ checkWin = () => {
 
 // Click Events Here:
 rollBtn1.addEventListener('click', () => {
-  if (diceStatus === 'on') {
-    rollDice(p1);
-  }
+  rollDice(p1);
+  rollBtn1.style.opacity = 0;
+  rollBtn2.style.opacity = 1;
 });
+
 rollBtn2.addEventListener('click', () => {
-  if (diceStatus === 'on') {
-    rollDice(p2);
-  }
+  rollDice(p2);
+  rollBtn2.style.opacity = 0;
+  rollBtn1.style.opacity = 1;
 });
+
 clearCardBtn.addEventListener('click', () => {
   notBox.style.opacity = 0;
   // add clearTimeout(timeoutID) here referencing the id of the pauseJumpPos ID

@@ -41,26 +41,24 @@ Game Board Mock-up:
 ## **_Roadmap (Future Updates)_**
 
 - ~~Write a proffesional ReadMe~~
-- Write CSS and HTML for basic gameboard structure
-- Write HTML for start page (where users enter player names)
-- Write HTML for event page?
-- Write HTML for property page
-- Write JS OOP to create player classes based on user input
-- Write JS OOP to create property classes
-- Write JS to create each property class quickly referencing Monopoly game
-- Write JS for rollDice, movePlayer, offerToBuy, function
+- ~~Write CSS and HTML for basic gameboard structure~~
+- ~~Write HTML for start page (where users enter player names)~~
+- ~~Write HTML for property page~~
+- ~~Write JS OOP to create player classes based on user input~~
+- ~~Write JS OOP to create property classes~~
+- ~~Write JS to create each property class quickly referencing Monopoly game~~
+- Write JS for ~~rollDice, movePlayer,~~ offerToBuy, function
 
 ---
 
 ## **_Getting Started_**
 
-1. Enter each player's name (up to four)
-2. Press Start
-3. On your turn:
+1. Press Start
+2. On your turn:
    - Trade with other player's (optional)
    - Roll the dice
    - Follow prompts for your roll
-4. Take all your friend's money!
+3. Take all your friend's money!
 
 ---
 
