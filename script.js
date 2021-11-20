@@ -100,7 +100,7 @@ class player {
     this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
-    this.bankAcc = 1500;
+    this.bankAcc = 100;
     this.propsOwned = [];
     this.totPropsVal = 0;
     this.totVal = this.bankAcc + this.totPropsVal;
@@ -376,13 +376,14 @@ pausePassGo = (ply) => {
 };
 
 checkWin = () => {
-  if (p1.bankAcc < 0 || p2.bankAcc < 0) {
-    setTimeout(
-      (gameOver = () => {
-        window.location.href = 'gameover.html';
-      }),
-      4000
-    );
+  if (p1.bankAcc < 0) {
+    setTimeout(() => {
+      window.location.href = 'gameover.html' + '#' + 'Player2';
+    }, 3000);
+  } else if (p2.bankAcc < 0) {
+    setTimeout(() => {
+      window.location.href = 'gameover.html' + '#' + 'Player1';
+    }, 3000);
   }
 };
 //////////////////////

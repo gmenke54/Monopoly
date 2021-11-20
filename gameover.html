@@ -9,13 +9,16 @@
 <body>
   <section>
     <h1>Game Over</h1>
-    <!-- <h2><span id="winnerDisp"></span> wins!</h2> -->
+    <h2><span id="winnerDisp"></span> wins!</h2>
   </section>
   <section>
     <a href="index.html">
       <h2>Play Again</h2>
     </a>
   </section>
-  <!-- <script type="text/javascript" src="script.js"></script> -->
+  <script>
+    let text = window.location.hash.substring(1)
+    document.querySelector("#winnerDisp").innerHTML = text
+  </script>
 </body>
 </html>
