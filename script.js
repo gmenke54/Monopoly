@@ -82,7 +82,11 @@ let spacesArr = [
   spc40
 ];
 
-const ply1HandDisp = document.getElementById();
+const ply1HandDisp = document.getElementById('ply1HandDisp');
+const ply2HandDisp = document.getElementById('ply2HandDisp');
+const ply2BankDisp = document.getElementById('ply2BankDisp');
+const ply1BankDisp = document.getElementById('ply1BankDisp');
+//ADD winning player display on gameover page
 
 let diceStatus = 'on';
 const notBox = document.getElementById('noticeBox');
@@ -215,6 +219,23 @@ let propsArr = [
 
 //Functions Here:
 
+dispMoney = (ply) => {
+  if (ply === p1) {
+    ply1BankDisp.innerText = p1.bankAcc;
+  } else if (ply === p2) {
+    ply2BankDisp.innerText = p2.bankAcc;
+  }
+  checkWin();
+};
+
+dispHand = (ply) => {
+  if (ply === p1) {
+    ply1HandDisp.innerText = p1.propsOwned;
+  } else if (ply === p2) {
+    ply2HandDisp.innerText = p2.propsOwned;
+  }
+};
+
 createNot = (message) => {
   notMsg.innerText = message;
   notBox.style.opacity = 1;
@@ -234,15 +255,19 @@ pauseJumpPos = (ply, newPos) => {
 
 buyProp = (ply, prop) => {
   ply.bankAcc -= prop.cost;
+  dispMoney(ply);
   ply.totVal = ply.bankAcc;
   ply.propsOwned.push(prop.name);
+  dispHand(ply);
   prop.isOwned = true;
   prop.owner = ply;
 };
 
 payRent = (curPly, owner, prop) => {
   curPly.bankAcc -= prop.rent;
+  dispMoney(curPly);
   owner.bankAcc += prop.rent;
+  dispMoney(owner);
 };
 
 checkOwned = (ply) => {
@@ -261,6 +286,7 @@ checkSpc = (ply) => {
   if (ply.curPos === 0) {
     createNot('You landed on go, collect an extra $200.');
     ply.bankAcc += 200;
+    dispMoney(ply);
   } else if (ply.curPos === 30) {
     createNot('Go directly to jail. Do not pass go. Do not collect $200.');
     //  FIX JAIL LOGIC HERE:
@@ -272,11 +298,13 @@ checkSpc = (ply) => {
   } else if (ply.curPos === 4) {
     createNot('You must pay income taxes. Pay $200.');
     ply.bankAcc -= 200;
+    dispMoney(ply);
   } else if (ply.curPos === 10) {
     createNot('You are just visiting jail.');
   } else if (ply.curPos === 38) {
     createNot('You must pay luxury taxes. Pay $100.');
     ply.bankAcc -= 100;
+    dispMoney(ply);
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
       'You landed on a chance space. You will now be move forward to a random space on the board. Good luck!'
@@ -293,11 +321,10 @@ checkSpc = (ply) => {
 
 rollDice = (ply) => {
   notBox.style.opacity = 0;
-  // let dice1 = Math.ceil(Math.random() * 6);
-  // let dice2 = Math.ceil(Math.random() * 6);
-  // let roll = dice1 + dice2;
-  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  let roll = 8;
+  let dice1 = Math.ceil(Math.random() * 6);
+  let dice2 = Math.ceil(Math.random() * 6);
+  let roll = dice1 + dice2;
+  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
@@ -308,6 +335,16 @@ rollDice = (ply) => {
   checkSpc(ply);
 };
 
+checkWin = () => {
+  if (p1.bankAcc < 0 || p2.bankAcc < 0) {
+    setTimeout(
+      (gameOver = () => {
+        window.location.href = 'gameover.html';
+      }),
+      4000
+    );
+  }
+};
 //////////////////////
 
 // Click Events Here:
