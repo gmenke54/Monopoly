@@ -179,7 +179,7 @@ let propsArr = [
   'CC',
   baltic,
   'IT',
-  'RR',
+  readR,
   oriental,
   'chance',
   vermont,
