@@ -105,23 +105,39 @@ let p1 = new player(token1, 'Allegra');
 let p2 = new player(token2, 'Grant');
 
 class colProperty {
-  constructor(name, cost, spaceNum) {
+  constructor(name, cost, spaceNum, houseCost) {
     this.name = name;
     this.cost = cost;
     this.rent = Math.ceil(this.cost / 13);
     this.spc = spacesArr[spaceNum];
     this.isOwned = false;
-    this.houseCost = 100;
+    this.houseCost = houseCost;
     this.curHouses = 0;
     this.owner = null;
   }
 }
-let medit = new colProperty('Mediteranean Avenue', 60, 1);
-let baltic = new colProperty('Baltic Avenue', 60, 3);
-let oriental = new colProperty('Oriental Avenue', 100, 6);
-let vermont = new colProperty('Vermont Avenue', 100, 8);
-let connet = new colProperty('Conneticut Avenue', 120, 9);
-//NEED TO add the rest of the property instances here
+let medit = new colProperty('Mediteranean Avenue', 60, 1, 50);
+let baltic = new colProperty('Baltic Avenue', 60, 3, 50);
+let oriental = new colProperty('Oriental Avenue', 100, 6, 50);
+let vermont = new colProperty('Vermont Avenue', 100, 8, 50);
+let connet = new colProperty('Conneticut Avenue', 120, 9, 50);
+let stChar = new colProperty('St. Charles Place', 140, 11, 100);
+let states = new colProperty('States Avenue', 140, 13, 100);
+let virg = new colProperty('Virginia Avenue', 160, 14, 100);
+let stJam = new colProperty('St. James Place', 180, 16, 100);
+let tenn = new colProperty('Tennessee Avenue', 180, 100);
+let newY = new colProperty('New York Avenue', 200, 19, 100);
+let kent = new colProperty('Kentucky Avenue', 220, 21, 150);
+let indiana = new colProperty('Indiana Avenue', 220, 23, 150);
+let illi = new colProperty('Illinois Avenue', 240, 24, 150);
+let atl = new colProperty('Atlantic Avenue', 260, 26, 150);
+let vent = new colProperty('Ventor Avenue', 260, 27, 150);
+let marv = new colProperty('Marvin Gardens', 280, 29, 150);
+let pac = new colProperty('Pacific Avenue', 300, 31, 200);
+let norC = new colProperty('North Carolina Avenue', 300, 32, 200);
+let penn = new colProperty('Pennsylvania Avenue', 320, 34, 200);
+let park = new colProperty('Park Place', 350, 37, 200);
+let boardW = new colProperty('Boardwalk', 400, 39, 200);
 
 class rrProperty {
   constructor(name, spaceNum) {
@@ -150,7 +166,6 @@ class utilProperty {
 }
 let elec = new utilProperty('Electric Company', 12);
 let water = new utilProperty('Water Works', 28);
-console.log(water);
 
 //NEED TO add the whole board in order to this array
 let propsArr = [
