@@ -121,7 +121,38 @@ let baltic = new colProperty('Baltic Avenue', 60, 3);
 let oriental = new colProperty('Oriental Avenue', 100, 6);
 let vermont = new colProperty('Vermont Avenue', 100, 8);
 let connet = new colProperty('Conneticut Avenue', 120, 9);
+//NEED TO add the rest of the property instances here
 
+class rrProperty {
+  constructor(name, spaceNum) {
+    this.name = name;
+    this.cost = 200;
+    this.rent = 25;
+    this.spc = spacesArr[spaceNum];
+    this.isOwned = false;
+    this.owner = null;
+  }
+}
+let readR = new rrProperty('Reading Railroad', 5);
+let pennR = new rrProperty('Pennsylvania Railroad', 15);
+let boR = new rrProperty('B. & O. Railroad', 25);
+let shortR = new rrProperty('Short Line Railroad', 35);
+
+class utilProperty {
+  constructor(name, spaceNum) {
+    this.name = name;
+    this.cost = 150;
+    this.rent = 21;
+    this.spc = spacesArr[spaceNum];
+    this.isOwned = false;
+    this.owner = null;
+  }
+}
+let elec = new utilProperty('Electric Company', 12);
+let water = new utilProperty('Water Works', 28);
+console.log(water);
+
+//NEED TO add the whole board in order to this array
 let propsArr = [
   'go',
   medit,
@@ -217,11 +248,11 @@ checkSpc = (ply) => {
 
 rollDice = (ply) => {
   notBox.style.opacity = 0;
-  let dice1 = Math.ceil(Math.random() * 6);
-  let dice2 = Math.ceil(Math.random() * 6);
-  let roll = dice1 + dice2;
-  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  // let roll = 30;
+  // let dice1 = Math.ceil(Math.random() * 6);
+  // let dice2 = Math.ceil(Math.random() * 6);
+  // let roll = dice1 + dice2;
+  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  let roll = 8;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     ply.curPos -= 40;
