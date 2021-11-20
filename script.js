@@ -82,6 +82,8 @@ let spacesArr = [
   spc40
 ];
 
+const ply1HandDisp = document.getElementById();
+
 let diceStatus = 'on';
 const notBox = document.getElementById('noticeBox');
 const notMsg = document.getElementById('noticeMessage');
@@ -167,7 +169,6 @@ class utilProperty {
 let elec = new utilProperty('Electric Company', 12);
 let water = new utilProperty('Water Works', 28);
 
-//NEED TO add the whole board in order to this array
 let propsArr = [
   'go',
   medit,
@@ -179,7 +180,36 @@ let propsArr = [
   'chance',
   vermont,
   connet,
-  'jail'
+  'jail',
+  stChar,
+  elec,
+  states,
+  virg,
+  pennR,
+  stJam,
+  'CC',
+  tenn,
+  newY,
+  'Free Parking',
+  kent,
+  'chance',
+  indiana,
+  illi,
+  boR,
+  atl,
+  vent,
+  water,
+  marv,
+  'goJail',
+  pac,
+  norC,
+  'CC',
+  penn,
+  shortR,
+  'chance',
+  park,
+  'LT',
+  boardW
 ];
 //////////////////////
 

@@ -6,10 +6,18 @@ body {
 
 #play2disp {
   background-color: rgb(250, 214, 214);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
 }
 
 #play1disp {
   background-color: rgb(231, 231, 255);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
 }
 
 #gameBoard {
@@ -93,4 +101,9 @@ h3 {
   align-items: center;
   font-size: 3vh;
   opacity: 0;
+}
+
+.handDisp {
+  display: flex;
+  flex-direction: column;
 }
