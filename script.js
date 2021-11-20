@@ -107,8 +107,8 @@ class player {
     this.jailCount = 0;
   }
 }
-let p1 = new player(token1, 'Allegra');
-let p2 = new player(token2, 'Grant');
+let p1 = new player(token1, 'Player 1');
+let p2 = new player(token2, 'Player 2');
 
 class colProperty {
   constructor(name, cost, spaceNum, houseCost) {
@@ -269,10 +269,14 @@ buyProp = (ply, prop) => {
 };
 
 payRent = (curPly, owner, prop) => {
+  let propName = prop.name;
+  let ownerName = curPly.persName;
+  let propRent = prop.rent;
   curPly.bankAcc -= prop.rent;
   dispMoney(curPly);
   owner.bankAcc += prop.rent;
   dispMoney(owner);
+  createNot(`You landed on ${propName}. Pay ${ownerName} $${propRent}.`);
 };
 
 checkOwned = (ply) => {
