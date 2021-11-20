@@ -301,18 +301,18 @@ checkSpc = (ply) => {
     //   ply.jailCount += 1;
     pauseJumpPos(ply, 10);
   } else if (ply.curPos === 4) {
-    createNot('You must pay income taxes. Pay $200.');
+    createNot('You landed on income taxes. Pay $200.');
     ply.bankAcc -= 200;
     dispMoney(ply);
   } else if (ply.curPos === 10) {
     createNot('You are just visiting jail.');
   } else if (ply.curPos === 38) {
-    createNot('You must pay luxury taxes. Pay $100.');
+    createNot('You landed on luxury taxes. Pay $100.');
     ply.bankAcc -= 100;
     dispMoney(ply);
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
-      'You landed on a chance space. You will now be move forward to a random space on the board. Good luck!'
+      'You landed on a chance space. You will now jump to a random space on the board. Good luck!'
     );
     let randomSpc = Math.floor(Math.random() * 39);
     console.log(randomSpc);
@@ -343,19 +343,32 @@ checkSpc = (ply) => {
 
 rollDice = (ply) => {
   notBox.style.opacity = 0;
-  // let dice1 = Math.ceil(Math.random() * 6);
-  // let dice2 = Math.ceil(Math.random() * 6);
-  // let roll = dice1 + dice2;
-  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  let roll = 2;
+  let dice1 = Math.ceil(Math.random() * 6);
+  let dice2 = Math.ceil(Math.random() * 6);
+  let roll = dice1 + dice2;
+  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  // let roll = 21;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
-    ply.curPos -= 40;
-    spacesArr[ply.curPos].appendChild(ply.token);
+    pausePassGo(ply);
   } else {
     spacesArr[ply.curPos].appendChild(ply.token);
+    checkSpc(ply);
   }
-  checkSpc(ply);
+};
+
+pausePassGo = (ply) => {
+  ply.curPos -= 40;
+  spacesArr[ply.curPos].appendChild(ply.token);
+  createNot('You passed Go. Collect $200.');
+  ply.bankAcc += 200;
+  dispMoney(ply);
+  setTimeout(
+    (passGo = () => {
+      checkSpc(ply);
+    }),
+    3000
+  );
 };
 
 checkWin = () => {
