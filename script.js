@@ -87,12 +87,18 @@ const ply2HandDisp = document.getElementById('ply2HandDisp');
 const ply2BankDisp = document.getElementById('ply2BankDisp');
 const ply1BankDisp = document.getElementById('ply1BankDisp');
 
-let diceStatus = 'on';
+// let diceStatus = 'on';
 const notBox = document.getElementById('noticeBox');
 const notMsg = document.getElementById('noticeMessage');
 
 const token1 = document.getElementById('token1');
 const token2 = document.getElementById('token2');
+
+const ply1NameBtn = document.getElementById('ply1SubName');
+let p1NameInput = document.getElementById('ply1Input').value;
+
+const ply2NameBtn = document.getElementById('ply2SubName');
+let p2NameInput = document.getElementById('ply2Input').value;
 
 class player {
   constructor(tokenNum, persName) {
@@ -106,8 +112,8 @@ class player {
     this.jailCount = 0;
   }
 }
-let p1 = new player(token1, 'Grant');
-let p2 = new player(token2, 'Mo');
+let p1 = new player(token1, 'Player1');
+let p2 = new player(token2, 'Player2');
 
 class colProperty {
   constructor(name, cost, spaceNum, houseCost) {
@@ -265,16 +271,6 @@ pauseJumpPos = (ply, newPos) => {
   );
 };
 
-// buyProp = (ply, prop) => {
-//   ply.bankAcc -= prop.cost;
-//   dispMoney(ply);
-//   ply.totVal = ply.bankAcc;
-//   ply.propsOwned.push(prop.name);
-//   dispHand(ply);
-//   prop.isOwned = true;
-//   prop.owner = ply;notBox.style.opacity = 0;
-// };
-
 buyProp = (ply, prop) => {
   const propName = prop.name;
   const propCost = prop.cost;
@@ -284,7 +280,6 @@ buyProp = (ply, prop) => {
   noBtn.style.opacity = 1;
   clearCardBtn.style.opacity = 0;
   yesBtn.onclick = () => {
-    console.log('working');
     ply.bankAcc -= prop.cost;
     dispMoney(ply);
     ply.totVal = ply.bankAcc;
@@ -353,7 +348,6 @@ checkSpc = (ply) => {
       'You landed on a chance space. You will now jump to a random space on the board. Good luck!'
     );
     let randomSpc = Math.floor(Math.random() * 39);
-    console.log(randomSpc);
     pauseJumpPos(ply, randomSpc);
   } else if (ply.curPos === 20) {
     createNot('You landed on Free Parking. Relax! Nothing happens.');
@@ -434,6 +428,26 @@ rollBtn2.addEventListener('click', () => {
   rollDice(p2);
   rollBtn2.style.opacity = 0;
   rollBtn1.style.opacity = 1;
+});
+
+ply1NameBtn.addEventListener('click', () => {
+  p1NameInput = document.getElementById('ply1Input').value;
+  p1.persName = p1NameInput;
+  document.querySelector('#ply1NameInput').style.opacity = 0;
+  document.getElementById('ply1NameDisp').innerText = p1.persName;
+  document.getElementById('nameHandDisp1').innerText = p1.persName;
+  let firstLet = p1.persName[0];
+  document.getElementById('token1').innerText = firstLet.toUpperCase();
+});
+
+ply2NameBtn.addEventListener('click', () => {
+  p2NameInput = document.getElementById('ply2Input').value;
+  p2.persName = p2NameInput;
+  document.querySelector('#ply2NameInput').style.opacity = 0;
+  document.getElementById('ply2NameDisp').innerText = p2.persName;
+  document.getElementById('nameHandDisp2').innerText = p2.persName;
+  let firstLet = p2.persName[0];
+  document.getElementById('token2').innerText = firstLet.toUpperCase();
 });
 
 //////////////////////

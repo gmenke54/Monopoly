@@ -10,10 +10,14 @@
 <body>
   <section id="play2disp">
     <div class="plyTitle">
-      <h1>Player 2</h1>
+      <h1 id="ply2NameDisp">Player 2</h1>
       <button id="rollBtn2">Roll Dice</button>
     </div>
-    <h4>Player 2's hand:</h4>
+    <div id="ply2NameInput">
+      <input type="text" id="ply2Input" value="" placeholder="enter name here">
+      <button id="ply2SubName">Submit</button>
+    </div>
+    <h4><span id="nameHandDisp2">Player 2</span>'s hand:</h4>
     <h5 id="ply2HandDisp" class="handDisp"></h5>
     <h4 class="bankDisp">Money: $<span id="ply2BankDisp">1500</span> </h4>
     <a href="index.html">
@@ -92,10 +96,14 @@
   </section>
   <section id="play1disp">
     <div class="plyTitle">
-      <h1>Player 1</h1>
+      <h1 id="ply1NameDisp">Player 1</h1>
       <button id="rollBtn1">Roll Dice</button>
     </div>
-    <h4>Player 1's hand:</h4>
+    <div id="ply1NameInput">
+      <input type="text" id="ply1Input" value="" placeholder="enter name here">
+      <button id="ply1SubName">Submit</button>
+    </div>
+    <h4><span id="nameHandDisp1">Player 1</span>'s hand:</h4>
     <h5 id="ply1HandDisp" class="handDisp"></h5>
     <h4 class="bankDisp">Money: $<span id="ply1BankDisp">1500</span> </h4>
     <a href="index.html">
