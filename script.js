@@ -126,6 +126,7 @@ class colProperty {
     this.houseCost = houseCost;
     this.curHouses = 0;
     this.owner = null;
+    this.isMort = false;
   }
 }
 let medit = new colProperty('Mediteranean Avenue', 60, 1, 50);
@@ -304,11 +305,15 @@ payRent = (curPly, owner, prop) => {
   let propName = prop.name;
   let ownerName = owner.persName;
   let propRent = prop.rent;
-  curPly.bankAcc -= prop.rent;
-  dispMoney(curPly);
-  owner.bankAcc += prop.rent;
-  dispMoney(owner);
-  createNot(`You landed on ${propName}. Pay ${ownerName} $${propRent}.`);
+  if (prop.isMort === false) {
+    curPly.bankAcc -= prop.rent;
+    dispMoney(curPly);
+    owner.bankAcc += prop.rent;
+    dispMoney(owner);
+    createNot(`You landed on ${propName}. Pay ${ownerName} $${propRent}.`);
+  } else if (prop.isMort === true) {
+    createNot(`You landed on ${propName} but it is mortgaged.`);
+  }
 };
 
 checkOwned = (ply) => {
