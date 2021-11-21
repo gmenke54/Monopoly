@@ -110,6 +110,7 @@ class player {
     this.totPropsVal = 0;
     this.totVal = this.bankAcc + this.totPropsVal;
     this.jailCount = 0;
+    this.doublesCount = 0;
   }
 }
 let p1 = new player(token1, 'Player1');
@@ -229,6 +230,8 @@ const noBtn = document.querySelector('#noBtn');
 rollBtn2.style.opacity = 0;
 yesBtn.style.opacity = 0;
 noBtn.style.opacity = 0;
+
+let freeParkPot = 0;
 //////////////////////
 
 //Functions Here:
@@ -336,12 +339,14 @@ checkSpc = (ply) => {
   } else if (ply.curPos === 4) {
     createNot('You landed on income taxes. Pay $200.');
     ply.bankAcc -= 200;
+    freeParkPot += 200;
     dispMoney(ply);
   } else if (ply.curPos === 10) {
     createNot('You are just visiting jail.');
   } else if (ply.curPos === 38) {
     createNot('You landed on luxury taxes. Pay $100.');
     ply.bankAcc -= 100;
+    freeParkPot += 100;
     dispMoney(ply);
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
@@ -350,7 +355,11 @@ checkSpc = (ply) => {
     let randomSpc = Math.floor(Math.random() * 39);
     pauseJumpPos(ply, randomSpc);
   } else if (ply.curPos === 20) {
-    createNot('You landed on Free Parking. Relax! Nothing happens.');
+    createNot(
+      `You landed on Free Parking. Collect the $${freeParkPot} jackpot!`
+    );
+    ply.bankAcc += freeParkPot;
+    dispMoney(ply);
   } else if (ply.curPos === 2 || ply.curPos === 17 || ply.curPos === 33) {
     let randomGain = Math.ceil(Math.random() * 150);
     let randomLoss = Math.ceil(Math.random() * 100);
@@ -367,6 +376,7 @@ checkSpc = (ply) => {
       );
       ply.bankAcc -= randomLoss;
       dispMoney(ply);
+      freeParkPot += randomLoss;
     }
   } else {
     checkOwned(ply);
@@ -377,6 +387,9 @@ rollDice = (ply) => {
   notBox.style.opacity = 0;
   let dice1 = Math.ceil(Math.random() * 6);
   let dice2 = Math.ceil(Math.random() * 6);
+  if (dice1 === dice2) {
+    ply.doublesCount += 1;
+  }
   let roll = dice1 + dice2;
   alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
   // let roll = 21;
