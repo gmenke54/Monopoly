@@ -86,7 +86,6 @@ const ply1HandDisp = document.getElementById('ply1HandDisp');
 const ply2HandDisp = document.getElementById('ply2HandDisp');
 const ply2BankDisp = document.getElementById('ply2BankDisp');
 const ply1BankDisp = document.getElementById('ply1BankDisp');
-//ADD winning player display on gameover page
 
 let diceStatus = 'on';
 const notBox = document.getElementById('noticeBox');
@@ -100,15 +99,15 @@ class player {
     this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
-    this.bankAcc = 100;
+    this.bankAcc = 1500;
     this.propsOwned = [];
     this.totPropsVal = 0;
     this.totVal = this.bankAcc + this.totPropsVal;
     this.jailCount = 0;
   }
 }
-let p1 = new player(token1, 'Player 1');
-let p2 = new player(token2, 'Player 2');
+let p1 = new player(token1, 'Grant');
+let p2 = new player(token2, 'Mo');
 
 class colProperty {
   constructor(name, cost, spaceNum, houseCost) {
@@ -216,10 +215,14 @@ let propsArr = [
   boardW
 ];
 
-let currTurn = 'p1';
 const rollBtn1 = document.querySelector('#rollBtn1');
 const rollBtn2 = document.querySelector('#rollBtn2');
+const clearCardBtn = document.querySelector('#clearCardBtn');
+const yesBtn = document.querySelector('#yesBtn');
+const noBtn = document.querySelector('#noBtn');
 rollBtn2.style.opacity = 0;
+yesBtn.style.opacity = 0;
+noBtn.style.opacity = 0;
 //////////////////////
 
 //Functions Here:
@@ -244,6 +247,10 @@ dispHand = (ply) => {
 createNot = (message) => {
   notMsg.innerText = message;
   notBox.style.opacity = 1;
+  clearCardBtn.addEventListener('click', () => {
+    notBox.style.opacity = 0;
+    // add clearTimeout(timeoutID) here referencing the id of the pauseJumpPos ID
+  });
 };
 
 pauseJumpPos = (ply, newPos) => {
@@ -258,14 +265,41 @@ pauseJumpPos = (ply, newPos) => {
   );
 };
 
+// buyProp = (ply, prop) => {
+//   ply.bankAcc -= prop.cost;
+//   dispMoney(ply);
+//   ply.totVal = ply.bankAcc;
+//   ply.propsOwned.push(prop.name);
+//   dispHand(ply);
+//   prop.isOwned = true;
+//   prop.owner = ply;notBox.style.opacity = 0;
+// };
+
 buyProp = (ply, prop) => {
-  ply.bankAcc -= prop.cost;
-  dispMoney(ply);
-  ply.totVal = ply.bankAcc;
-  ply.propsOwned.push(prop.name);
-  dispHand(ply);
-  prop.isOwned = true;
-  prop.owner = ply;
+  const propName = prop.name;
+  const propCost = prop.cost;
+  notMsg.innerText = `You landed on ${propName} which costs $${propCost}. Would you like to purchase ${propName}?`;
+  notBox.style.opacity = 1;
+  yesBtn.style.opacity = 1;
+  noBtn.style.opacity = 1;
+  clearCardBtn.style.opacity = 0;
+  yesBtn.onclick = () => {
+    console.log('working');
+    ply.bankAcc -= prop.cost;
+    dispMoney(ply);
+    ply.totVal = ply.bankAcc;
+    ply.propsOwned.push(prop.name);
+    dispHand(ply);
+    prop.isOwned = true;
+    prop.owner = ply;
+    yesBtn.style.opacity = 0;
+    noBtn.style.opacity = 0;
+    clearCardBtn.style.opacity = 1;
+    notBox.style.opacity = 0;
+  };
+  noBtn.onclick = () => {
+    notBox.style.opacity = 0;
+  };
 };
 
 payRent = (curPly, owner, prop) => {
@@ -378,14 +412,15 @@ pausePassGo = (ply) => {
 checkWin = () => {
   if (p1.bankAcc < 0) {
     setTimeout(() => {
-      window.location.href = 'gameover.html' + '#' + 'Player2';
+      window.location.href = 'gameover.html' + '#' + p2.persName;
     }, 3000);
   } else if (p2.bankAcc < 0) {
     setTimeout(() => {
-      window.location.href = 'gameover.html' + '#' + 'Player1';
+      window.location.href = 'gameover.html' + '#' + p1.persName;
     }, 3000);
   }
 };
+
 //////////////////////
 
 // Click Events Here:
@@ -399,11 +434,6 @@ rollBtn2.addEventListener('click', () => {
   rollDice(p2);
   rollBtn2.style.opacity = 0;
   rollBtn1.style.opacity = 1;
-});
-
-clearCardBtn.addEventListener('click', () => {
-  notBox.style.opacity = 0;
-  // add clearTimeout(timeoutID) here referencing the id of the pauseJumpPos ID
 });
 
 //////////////////////
