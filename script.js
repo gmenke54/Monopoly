@@ -302,7 +302,7 @@ buyProp = (ply, prop) => {
 
 payRent = (curPly, owner, prop) => {
   let propName = prop.name;
-  let ownerName = curPly.persName;
+  let ownerName = owner.persName;
   let propRent = prop.rent;
   curPly.bankAcc -= prop.rent;
   dispMoney(curPly);
@@ -387,9 +387,10 @@ rollDice = (ply) => {
   notBox.style.opacity = 0;
   let dice1 = Math.ceil(Math.random() * 6);
   let dice2 = Math.ceil(Math.random() * 6);
-  if (dice1 === dice2) {
-    ply.doublesCount += 1;
-  }
+  //Need to add doubles logic here:
+  // if (dice1 === dice2) {
+  //   ply.doublesCount += 1;
+  // }
   let roll = dice1 + dice2;
   alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
   // let roll = 21;
