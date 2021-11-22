@@ -110,7 +110,7 @@ class player {
     this.propsOwnedSpcs = [];
     this.propsOwnedObjs = [];
     this.totPropsVal = 0;
-    this.totVal = this.bankAcc + this.totPropsVal;
+    this.totVal = 1500;
     this.jailCount = 0;
     this.doublesCount = 0;
   }
@@ -239,6 +239,8 @@ const p1MortBtn = document.querySelector('#p1MortBtn');
 const p2MortBtn = document.querySelector('#p2MortBtn');
 
 let freeParkPot = 0;
+p2MortBtn.style.opacity = 0;
+
 //////////////////////
 
 //Functions Here:
@@ -281,6 +283,12 @@ pauseJumpPos = (ply, newPos) => {
   );
 };
 
+gainMoney = (ply, amtGain) => {
+  ply.bankAcc += amtGain;
+  dispMoney(ply);
+  ply.totVal += amtGain;
+};
+
 buyProp = (ply, prop) => {
   const propName = prop.name;
   const propCost = prop.cost;
@@ -290,9 +298,8 @@ buyProp = (ply, prop) => {
   noBtn.style.opacity = 1;
   clearCardBtn.style.opacity = 0;
   yesBtn.onclick = () => {
-    ply.bankAcc -= prop.cost;
-    dispMoney(ply);
-    ply.totVal = ply.bankAcc;
+    gainMoney(ply, -1 * prop.cost);
+    ply.totVal += prop.cost / 2;
     ply.propsOwned.push(prop.name);
     ply.propsOwnedSpcs.push(prop.spc);
     ply.propsOwnedObjs.push(prop);
@@ -314,10 +321,8 @@ payRent = (curPly, owner, prop) => {
   let ownerName = owner.persName;
   let propRent = prop.rent;
   if (prop.isMort === false) {
-    curPly.bankAcc -= prop.rent;
-    dispMoney(curPly);
-    owner.bankAcc += prop.rent;
-    dispMoney(owner);
+    gainMoney(curPly, -1 * prop.rent);
+    gainMoney(owner, prop.rent);
     createNot(`You landed on ${propName}. Pay ${ownerName} $${propRent}.`);
   } else if (prop.isMort === true) {
     createNot(`You landed on ${propName} but it is mortgaged.`);
@@ -339,8 +344,7 @@ checkOwned = (ply) => {
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
     createNot('You landed on go, collect an extra $200.');
-    ply.bankAcc += 200;
-    dispMoney(ply);
+    gainMoney(ply, 200);
   } else if (ply.curPos === 30) {
     createNot('Go directly to jail. Do not pass go. Do not collect $200.');
     //  FIX JAIL LOGIC HERE:
@@ -351,16 +355,14 @@ checkSpc = (ply) => {
     pauseJumpPos(ply, 10);
   } else if (ply.curPos === 4) {
     createNot('You landed on income taxes. Pay $200.');
-    ply.bankAcc -= 200;
+    gainMoney(ply, -200);
     freeParkPot += 200;
-    dispMoney(ply);
   } else if (ply.curPos === 10) {
     createNot('You are just visiting jail.');
   } else if (ply.curPos === 38) {
     createNot('You landed on luxury taxes. Pay $100.');
-    ply.bankAcc -= 100;
+    gainMoney(ply, -100);
     freeParkPot += 100;
-    dispMoney(ply);
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
       'You landed on a chance space. You will now jump to a random space on the board. Good luck!'
@@ -371,8 +373,7 @@ checkSpc = (ply) => {
     createNot(
       `You landed on Free Parking. Collect the $${freeParkPot} jackpot!`
     );
-    ply.bankAcc += freeParkPot;
-    dispMoney(ply);
+    gainMoney(ply, freeParkPot);
   } else if (ply.curPos === 2 || ply.curPos === 17 || ply.curPos === 33) {
     let randomGain = Math.ceil(Math.random() * 150);
     let randomLoss = Math.ceil(Math.random() * 100);
@@ -381,14 +382,12 @@ checkSpc = (ply) => {
       createNot(
         `You landed on Community Chest and today is your lucky day. Collect $${randomGain}!`
       );
-      ply.bankAcc += randomGain;
-      dispMoney(ply);
+      gainMoney(ply, randomGain);
     } else if (fateDecider === 2) {
       createNot(
         `Uh-oh! You landed on Community Chest and it's empty. Pay $${randomLoss}.`
       );
-      ply.bankAcc -= randomLoss;
-      dispMoney(ply);
+      gainMoney(ply, -1 * randomLoss);
       freeParkPot += randomLoss;
     }
   } else {
@@ -397,6 +396,13 @@ checkSpc = (ply) => {
 };
 
 rollDice = (ply) => {
+  if (ply === p1) {
+    p1MortBtn.style.opacity = 0;
+    p2MortBtn.style.opacity = 1;
+  } else if (ply === p2) {
+    p2MortBtn.style.opacity = 0;
+    p1MortBtn.style.opacity = 1;
+  }
   notBox.style.opacity = 0;
   let dice1 = Math.ceil(Math.random() * 6);
   let dice2 = Math.ceil(Math.random() * 6);
@@ -420,8 +426,7 @@ pausePassGo = (ply) => {
   ply.curPos -= 40;
   spacesArr[ply.curPos].appendChild(ply.token);
   createNot('You passed Go. Collect $200.');
-  ply.bankAcc += 200;
-  dispMoney(ply);
+  gainMoney(ply, 200);
   setTimeout(
     (passGo = () => {
       checkSpc(ply);
@@ -431,11 +436,11 @@ pausePassGo = (ply) => {
 };
 
 checkWin = () => {
-  if (p1.bankAcc < 0) {
+  if (p1.totVal < 0) {
     setTimeout(() => {
       window.location.href = 'gameover.html' + '#' + p2.persName;
     }, 3000);
-  } else if (p2.bankAcc < 0) {
+  } else if (p2.totVal < 0) {
     setTimeout(() => {
       window.location.href = 'gameover.html' + '#' + p1.persName;
     }, 3000);
@@ -454,8 +459,8 @@ mortProp = (ply) => {
           propObjs[i].cost / 2
         }.`
       );
-      ply.bankAcc += propObjs[i].cost / 2;
-      dispMoney(ply);
+      gainMoney(ply, propObjs[i].cost / 2);
+      ply.totVal -= propObjs[i].cost / 2;
     };
   }
 };
