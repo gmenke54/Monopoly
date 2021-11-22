@@ -107,6 +107,8 @@ class player {
     this.curPos = 0;
     this.bankAcc = 1500;
     this.propsOwned = [];
+    this.propsOwnedSpcs = [];
+    this.propsOwnedObjs = [];
     this.totPropsVal = 0;
     this.totVal = this.bankAcc + this.totPropsVal;
     this.jailCount = 0;
@@ -160,6 +162,7 @@ class rrProperty {
     this.spc = spacesArr[spaceNum];
     this.isOwned = false;
     this.owner = null;
+    this.isMort = false;
   }
 }
 let readR = new rrProperty('Reading Railroad', 5);
@@ -175,6 +178,7 @@ class utilProperty {
     this.spc = spacesArr[spaceNum];
     this.isOwned = false;
     this.owner = null;
+    this.isMort = false;
   }
 }
 let elec = new utilProperty('Electric Company', 12);
@@ -231,6 +235,7 @@ const noBtn = document.querySelector('#noBtn');
 rollBtn2.style.opacity = 0;
 yesBtn.style.opacity = 0;
 noBtn.style.opacity = 0;
+const p1MortBtn = document.querySelector('#p1MortBtn');
 
 let freeParkPot = 0;
 //////////////////////
@@ -288,6 +293,8 @@ buyProp = (ply, prop) => {
     dispMoney(ply);
     ply.totVal = ply.bankAcc;
     ply.propsOwned.push(prop.name);
+    ply.propsOwnedSpcs.push(prop.spc);
+    ply.propsOwnedObjs.push(prop);
     dispHand(ply);
     prop.isOwned = true;
     prop.owner = ply;
@@ -315,6 +322,16 @@ payRent = (curPly, owner, prop) => {
     createNot(`You landed on ${propName} but it is mortgaged.`);
   }
 };
+
+// mortProp = (ply) => {
+//   const propsList = ply.propsOwned;
+//   for (let i = 0; i < propsList; i++) {
+//     console.log(propsList[i]);
+//     // ply.propsOwned[i].addEventListener('click', () => {
+
+//     // })
+//   }
+// };
 
 checkOwned = (ply) => {
   let propIndex = ply.curPos;
@@ -467,6 +484,20 @@ ply2NameBtn.addEventListener('click', () => {
   document.getElementById('nameHandDisp2').innerText = p2.persName;
   let firstLet = p2.persName[0];
   document.getElementById('token2').innerText = firstLet.toUpperCase();
+});
+
+p1MortBtn.addEventListener('click', () => {
+  createNot('Click on the property you want to mortgage.');
+  const propSpcs = p1.propsOwnedSpcs;
+  const propObjs = p1.propsOwnedObjs;
+  for (let i = 0; i < propSpcs.length; i++) {
+    propSpcs[i].onclick = () => {
+      propObjs[i].isMort = true;
+      createNot(`${propObjs[i].name} is now mortgaged.`);
+      p1.bankAcc += propObjs[i].cost / 2;
+      dispMoney(p1);
+    };
+  }
 });
 
 //////////////////////
