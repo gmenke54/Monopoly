@@ -300,7 +300,7 @@ pauseJumpPos = (ply, newPos) => {
       ply.curPos = newPos;
       checkSpc(ply);
     }),
-    3000
+    2000
   );
 };
 
@@ -448,7 +448,6 @@ rollDice = (ply) => {
   let dice2 = Math.ceil(Math.random() * 6);
   let roll = dice1 + dice2;
   alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  // let roll = 21;
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     pausePassGo(ply);
@@ -467,7 +466,7 @@ pausePassGo = (ply) => {
     (passGo = () => {
       checkSpc(ply);
     }),
-    3000
+    2000
   );
 };
 
