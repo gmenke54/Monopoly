@@ -87,7 +87,6 @@ const ply2HandDisp = document.getElementById('ply2HandDisp');
 const ply2BankDisp = document.getElementById('ply2BankDisp');
 const ply1BankDisp = document.getElementById('ply1BankDisp');
 
-// let diceStatus = 'on';
 const notBox = document.getElementById('noticeBox');
 const notMsg = document.getElementById('noticeMessage');
 
@@ -105,12 +104,12 @@ class player {
     this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
-    this.bankAcc = 1500;
+    this.bankAcc = 1000;
     this.propsOwned = [];
     this.propsOwnedSpcs = [];
     this.propsOwnedObjs = [];
     this.totPropsVal = 0;
-    this.totVal = 1500;
+    this.totVal = 1000;
     this.jailCount = 0;
     this.doublesCount = 0;
   }
@@ -375,15 +374,10 @@ checkOwned = (ply) => {
 
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
-    createNot('You landed on go, collect an extra $200.');
-    gainMoney(ply, 200);
+    createNot('You landed on go, collect an extra $100.');
+    gainMoney(ply, 100);
   } else if (ply.curPos === 30) {
     createNot('Go directly to jail. Do not pass go. Do not collect $200.');
-    //  FIX JAIL LOGIC HERE:
-    //  if (ply.curPos !== 10) {
-    //   checkSpc(ply);
-    // } else {
-    //   ply.jailCount += 1;
     pauseJumpPos(ply, 10);
   } else if (ply.curPos === 4) {
     createNot('You landed on income taxes. Pay $200.');
@@ -452,10 +446,6 @@ rollDice = (ply) => {
   notBox.style.opacity = 0;
   let dice1 = Math.ceil(Math.random() * 6);
   let dice2 = Math.ceil(Math.random() * 6);
-  //Need to add doubles logic here:
-  // if (dice1 === dice2) {
-  //   ply.doublesCount += 1;
-  // }
   let roll = dice1 + dice2;
   alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
   // let roll = 21;
