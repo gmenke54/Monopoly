@@ -124,6 +124,7 @@ class colProperty {
     this.cost = cost;
     this.rent = Math.ceil(this.cost / 13);
     this.spc = spacesArr[spaceNum];
+    this.spcNum = spaceNum;
     this.isOwned = false;
     this.houseCost = houseCost;
     this.curHouses = 0;
@@ -160,6 +161,7 @@ class rrProperty {
     this.cost = 200;
     this.rent = 25;
     this.spc = spacesArr[spaceNum];
+    this.spcNum = spaceNum;
     this.isOwned = false;
     this.owner = null;
     this.isMort = false;
@@ -176,6 +178,7 @@ class utilProperty {
     this.cost = 150;
     this.rent = 21;
     this.spc = spacesArr[spaceNum];
+    this.spcNum = spaceNum;
     this.isOwned = false;
     this.owner = null;
     this.isMort = false;
@@ -235,11 +238,16 @@ const noBtn = document.querySelector('#noBtn');
 rollBtn2.style.opacity = 0;
 yesBtn.style.opacity = 0;
 noBtn.style.opacity = 0;
+
 const p1MortBtn = document.querySelector('#p1MortBtn');
 const p2MortBtn = document.querySelector('#p2MortBtn');
 
+const p2BuyHouseBtn = document.querySelector('#p2BuyHouseBtn');
+const p1BuyHouseBtn = document.querySelector('#p1BuyHouseBtn');
+
 let freeParkPot = 0;
 p2MortBtn.style.opacity = 0;
+p2BuyHouseBtn.style.opacity = 0;
 
 //////////////////////
 
@@ -399,9 +407,13 @@ rollDice = (ply) => {
   if (ply === p1) {
     p1MortBtn.style.opacity = 0;
     p2MortBtn.style.opacity = 1;
+    p1BuyHouseBtn.style.opacity = 0;
+    p2BuyHouseBtn.style.opacity = 1;
   } else if (ply === p2) {
     p2MortBtn.style.opacity = 0;
     p1MortBtn.style.opacity = 1;
+    p2BuyHouseBtn.style.opacity = 0;
+    p1BuyHouseBtn.style.opacity = 1;
   }
   notBox.style.opacity = 0;
   let dice1 = Math.ceil(Math.random() * 6);
@@ -453,14 +465,55 @@ mortProp = (ply) => {
   const propObjs = ply.propsOwnedObjs;
   for (let i = 0; i < propSpcs.length; i++) {
     propSpcs[i].onclick = () => {
-      propObjs[i].isMort = true;
-      createNot(
-        `${propObjs[i].name} is now mortgaged. Collect $${
-          propObjs[i].cost / 2
-        }.`
-      );
-      gainMoney(ply, propObjs[i].cost / 2);
-      ply.totVal -= propObjs[i].cost / 2;
+      if (propObjs[i].isMort === true) {
+        createNot(`${propObjs[i].name} is already mortgaged.`);
+      } else {
+        propObjs[i].isMort = true;
+        createNot(
+          `${propObjs[i].name} is now mortgaged. Collect $${
+            propObjs[i].cost / 2
+          }.`
+        );
+        gainMoney(ply, propObjs[i].cost / 2);
+        ply.totVal -= propObjs[i].cost / 2;
+      }
+    };
+  }
+};
+
+buyHouse = (ply) => {
+  createNot('Click on a property to purchase a house for it.');
+  const propSpcs = ply.propsOwnedSpcs;
+  const propObjs = ply.propsOwnedObjs;
+  for (let i = 0; i < propSpcs.length; i++) {
+    propSpcs[i].onclick = () => {
+      if (
+        propObjs[i].spcNum === 5 ||
+        propObjs[i].spcNum === 15 ||
+        propObjs[i].spcNum === 25 ||
+        propObjs[i].spcNum === 35 ||
+        propObjs[i].spcNum === 12 ||
+        propObjs[i].spcNum === 28
+      ) {
+        createNot(
+          `You can't build houses on ${propObjs[i].name} because it is not a color set property.`
+        );
+      } else if (propObjs[i].isMort === true) {
+        createNot(
+          `${propObjs[i].name} is mortgaged. You must unmortgage it before you can buy a house.`
+        );
+      } else if (propObjs[i].curHouses >= 5) {
+        createNot(
+          `${propObjs[i].name} already has the maximum number of houses and costs $${propObjs[i].rent} to land on.`
+        );
+      } else {
+        propObjs[i].curHouses += 1;
+        propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
+        createNot(
+          `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
+        );
+        gainMoney(ply, -1 * propObjs[i].houseCost);
+      }
     };
   }
 };
@@ -506,6 +559,14 @@ p1MortBtn.addEventListener('click', () => {
 
 p2MortBtn.addEventListener('click', () => {
   mortProp(p2);
+});
+
+p1BuyHouseBtn.addEventListener('click', () => {
+  buyHouse(p1);
+});
+
+p2BuyHouseBtn.addEventListener('click', () => {
+  buyHouse(p2);
 });
 
 //////////////////////
