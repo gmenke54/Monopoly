@@ -105,12 +105,12 @@ class player {
     this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
-    this.bankAcc = 300;
+    this.bankAcc = 1500;
     this.propsOwned = [];
     this.propsOwnedSpcs = [];
     this.propsOwnedObjs = [];
     this.totPropsVal = 0;
-    this.totVal = 300;
+    this.totVal = 1500;
     this.jailCount = 0;
     this.doublesCount = 0;
   }
@@ -321,21 +321,30 @@ buyProp = (ply, prop) => {
   noBtn.style.opacity = 1;
   clearCardBtn.style.opacity = 0;
   yesBtn.onclick = () => {
-    gainMoney(ply, -1 * prop.cost);
-    ply.totVal += prop.cost / 2;
-    ply.propsOwned.push(prop.name);
-    ply.propsOwnedSpcs.push(prop.spc);
-    ply.propsOwnedObjs.push(prop);
-    dispHand(ply);
-    prop.isOwned = true;
-    prop.owner = ply;
-    yesBtn.style.opacity = 0;
-    noBtn.style.opacity = 0;
-    clearCardBtn.style.opacity = 1;
-    notBox.style.opacity = 0;
+    if (checkMoney(ply, propCost) === true) {
+      gainMoney(ply, -1 * prop.cost);
+      ply.totVal += prop.cost / 2;
+      ply.propsOwned.push(prop.name);
+      ply.propsOwnedSpcs.push(prop.spc);
+      ply.propsOwnedObjs.push(prop);
+      dispHand(ply);
+      prop.isOwned = true;
+      prop.owner = ply;
+      yesBtn.style.opacity = 0;
+      noBtn.style.opacity = 0;
+      clearCardBtn.style.opacity = 1;
+      notBox.style.opacity = 0;
+    } else {
+      yesBtn.style.opacity = 0;
+      noBtn.style.opacity = 0;
+      clearCardBtn.style.opacity = 1;
+    }
   };
   noBtn.onclick = () => {
     notBox.style.opacity = 0;
+    yesBtn.style.opacity = 0;
+    noBtn.style.opacity = 0;
+    clearCardBtn.style.opacity = 1;
   };
 };
 
@@ -419,6 +428,7 @@ checkSpc = (ply) => {
 };
 
 rollDice = (ply) => {
+  console.log(p1.totVal, p2.totVal);
   mortActive = false;
   unMortActive = false;
   buyHouseActive = false;
@@ -581,6 +591,18 @@ mortProp2 = () => {
   }
 };
 
+checkMoney = (ply, amtPay) => {
+  if (ply.bankAcc >= amtPay) {
+    return true;
+  } else {
+    createNot('You do not have enough money to do this.');
+    unMortActive = false;
+    mortActive = false;
+    buyHouseActive = false;
+    return false;
+  }
+};
+
 unMortProp1 = () => {
   createNot('Click on the property you want to unmortgage.');
   const propSpcs = p1.propsOwnedSpcs;
@@ -593,15 +615,17 @@ unMortProp1 = () => {
             createNot(`${propObjs[i].name} is not mortgaged.`);
             unMortActive = false;
           } else {
-            propObjs[i].isMort = false;
-            createNot(
-              `${propObjs[i].name} is now unmortgaged. Pay $${
-                (propObjs[i].cost / 2) * 1.1
-              }.`
-            );
-            gainMoney(p1, (propObjs[i].cost / 2) * -1.1);
-            p1.totVal += propObjs[i].cost / 2;
-            unMortActive = false;
+            if (checkMoney(p1, (propObjs[i].cost / 2) * 1.1) === true) {
+              propObjs[i].isMort = false;
+              createNot(
+                `${propObjs[i].name} is now unmortgaged. Pay $${
+                  (propObjs[i].cost / 2) * 1.1
+                }.`
+              );
+              gainMoney(p1, (propObjs[i].cost / 2) * -1.1);
+              p1.totVal += propObjs[i].cost / 2;
+              unMortActive = false;
+            }
           }
         };
       }
@@ -621,15 +645,17 @@ unMortProp2 = () => {
             createNot(`${propObjs[i].name} is not mortgaged.`);
             unMortActive = false;
           } else {
-            propObjs[i].isMort = false;
-            createNot(
-              `${propObjs[i].name} is now unmortgaged. Pay $${
-                (propObjs[i].cost / 2) * 1.1
-              }.`
-            );
-            gainMoney(p2, (propObjs[i].cost / 2) * -1.1);
-            p2.totVal += propObjs[i].cost / 2;
-            unMortActive = false;
+            if (checkMoney(p2, (propObjs[i].cost / 2) * 1.1) === true) {
+              propObjs[i].isMort = false;
+              createNot(
+                `${propObjs[i].name} is now unmortgaged. Pay $${
+                  (propObjs[i].cost / 2) * 1.1
+                }.`
+              );
+              gainMoney(p2, (propObjs[i].cost / 2) * -1.1);
+              p2.totVal += propObjs[i].cost / 2;
+              unMortActive = false;
+            }
           }
         };
       }
@@ -668,14 +694,16 @@ buyHouse1 = () => {
             );
             buyHouseActive = false;
           } else {
-            propObjs[i].curHouses += 1;
-            propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
-            createNot(
-              `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
-            );
-            gainMoney(p1, -1 * propObjs[i].houseCost);
-            p1.totVal += propObjs[i].houseCost / 2;
-            buyHouseActive = false;
+            if (checkMoney(p1, propObjs[i].houseCost) === true) {
+              propObjs[i].curHouses += 1;
+              propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
+              createNot(
+                `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
+              );
+              gainMoney(p1, -1 * propObjs[i].houseCost);
+              p1.totVal += propObjs[i].houseCost / 2;
+              buyHouseActive = false;
+            }
           }
         }
       }
@@ -713,14 +741,16 @@ buyHouse2 = () => {
             );
             buyHouseActive = false;
           } else {
-            propObjs[i].curHouses += 1;
-            propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
-            createNot(
-              `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
-            );
-            gainMoney(p2, -1 * propObjs[i].houseCost);
-            p2.totVal += propObjs[i].houseCost / 2;
-            buyHouseActive = false;
+            if (checkMoney(p2, propObjs[i].houseCost) === true) {
+              propObjs[i].curHouses += 1;
+              propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
+              createNot(
+                `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
+              );
+              gainMoney(p2, -1 * propObjs[i].houseCost);
+              p2.totVal += propObjs[i].houseCost / 2;
+              buyHouseActive = false;
+            }
           }
         }
       }
