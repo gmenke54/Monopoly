@@ -8,6 +8,93 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+  <section>
+    <section id="play1disp">
+      <div class="plyTitle">
+        <h1 id="ply1NameDisp">Player 1</h1>
+        <button id="rollBtn1">Roll Dice</button>
+      </div>
+      <div id="ply1NameInput">
+        <input type="text" id="ply1Input" value="" placeholder="enter name here">
+        <button id="ply1SubName">Submit</button>
+      </div>
+      <h4><span id="nameHandDisp1">Player 1</span>'s hand:</h4>
+      <h5 id="ply1HandDisp" class="handDisp"></h5>
+      <h4 class="bankDisp">Money: $<span id="ply1BankDisp">1000</span> </h4>
+      <button id="p1MortBtn">Mortgage</button>
+      <button id="p1UnMortBtn">Unmortgage</button>
+      <button id="p1BuyHouseBtn">Buy House</button>
+    </section>
+    <a href="index.html">
+      <h4>Return to Start Page</h4>
+    </a>
+  </section>
+  <section id="gameBoard">
+    <div id="freePark" class="spaces">
+    </div>
+    <section id="topProps" class="propSides tbSides">
+      <div id="s21" class="spaces"></div>
+      <div id="s22" class="spaces"></div>
+      <div id="s23" class="spaces"></div>
+      <div id="s24" class="spaces"></div>
+      <div id="s25" class="spaces railRoad"></div>
+      <div id="s26" class="spaces"></div>
+      <div id="s27" class="spaces"></div>
+      <div id="s28" class="spaces"></div>
+      <div id="s29" class="spaces"></div>
+    </section>
+    <div id="goJail" class="spaces">
+    </div>
+    <section id="leftProps" class="propSides lrSides">
+      <div id="s19" class="spaces"></div>
+      <div id="s18" class="spaces"></div>
+      <div id="s17" class="spaces"></div>
+      <div id="s16" class="spaces"></div>
+      <div id="s15" class="spaces railRoad"></div>
+      <div id="s14" class="spaces"></div>
+      <div id="s13" class="spaces"></div>
+      <div id="s12" class="spaces"></div>
+      <div id="s11" class="spaces"></div>
+    </section>
+    <section id="boardCenter">
+      <div id="noticeBox">
+        <div id="noticeMessage"></div>
+        <div id="buttons">
+          <button id="yesBtn">Yes</button>
+          <button id="clearCardBtn">Okay</button>
+          <button id="noBtn">No</button>
+        </div>
+      </div>
+    </section>
+    <section id="rightProps" class="propSides lrSides">
+      <div id="s31" class="spaces"></div>
+      <div id="s32" class="spaces"></div>
+      <div id="s33" class="spaces"></div>
+      <div id="s34" class="spaces"></div>
+      <div id="s35" class="spaces railRoad"></div>
+      <div id="s36" class="spaces"></div>
+      <div id="s37" class="spaces"></div>
+      <div id="s38" class="spaces"></div>
+      <div id="s39" class="spaces"></div>
+    </section>
+    <div id="jail" class="spaces" >
+    </div>
+    <section id="botProps" class="propSides tbSides">
+      <div id="s9" class="spaces"></div>
+      <div id="s8" class="spaces"></div>
+      <div id="s7" class="spaces"></div>
+      <div id="s6" class="spaces"></div>
+      <div id="s5" class="spaces railRoad"></div>
+      <div id="s4" class="spaces"></div>
+      <div id="s3" class="spaces"></div>
+      <div id="s2" class="spaces"></div>
+      <div id="s1" class="spaces"></div>
+    </section>
+    <div id="go" class="spaces">
+      <div id="token1" class="token">P1</div>
+      <div id="token2" class="token">P2</div>
+    </div>
+  </section>
   <section id="play2disp">
     <div class="plyTitle">
       <h1 id="ply2NameDisp">Player 2</h1>
@@ -23,95 +110,6 @@
     <button id="p2MortBtn">Mortgage</button>
     <button id="p2UnMortBtn">Unmortgage</button>
     <button id="p2BuyHouseBtn">Buy House</button>
-    <a href="index.html">
-      <h4>Return to Start Page</h4>
-    </a>
-  </section>
-  <section id="gameBoard">
-    <div id="freePark" class="spaces">
-      <h3>Free Parking</h3>
-    </div>
-    <section id="topProps" class="propSides tbSides">
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces railRoad"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-    </section>
-    <div id="goJail" class="spaces">
-      <h3>Go to Jail</h3>
-    </div>
-    <section id="leftProps" class="propSides lrSides">
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces railRoad"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-    </section>
-    <section id="boardCenter">Grantopoly
-      <div id="noticeBox">
-        <div id="noticeMessage"></div>
-        <div id="buttons">
-          <button id="yesBtn">Yes</button>
-          <button id="clearCardBtn">Okay</button>
-          <button id="noBtn">No</button>
-        </div>
-      </div>
-    </section>
-    <section id="rightProps" class="propSides lrSides">
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces railRoad"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-    </section>
-    <div id="jail" class="spaces" >
-      <h3>Jail</h3>
-    </div>
-    <section id="botProps" class="propSides tbSides">
-      <div id="connet" class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces railRoad"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-      <div class="spaces"></div>
-    </section>
-    <div id="go" class="spaces">
-      <h3>Go</h3>
-      <div id="token1" class="token">P1</div>
-      <div id="token2" class="token">P2</div>
-    </div>
-  </section>
-  <section id="play1disp">
-    <div class="plyTitle">
-      <h1 id="ply1NameDisp">Player 1</h1>
-      <button id="rollBtn1">Roll Dice</button>
-    </div>
-    <div id="ply1NameInput">
-      <input type="text" id="ply1Input" value="" placeholder="enter name here">
-      <button id="ply1SubName">Submit</button>
-    </div>
-    <h4><span id="nameHandDisp1">Player 1</span>'s hand:</h4>
-    <h5 id="ply1HandDisp" class="handDisp"></h5>
-    <h4 class="bankDisp">Money: $<span id="ply1BankDisp">1000</span> </h4>
-    <button id="p1MortBtn">Mortgage</button>
-    <button id="p1UnMortBtn">Unmortgage</button>
-    <button id="p1BuyHouseBtn">Buy House</button>
     <a href="index.html">
       <h4>Return to Start Page</h4>
     </a>

@@ -65,3 +65,7 @@ Game Board Mock-up:
 ## **_Credits_**
 
 **Monopoly Title Image:** [DuckDuckGo](https://duckduckgo.com/?t=hc&va=b)
+
+**Monopoly Tile Images for Gameboard:** [Pixabay] (https://pixabay.com/illustrations/monopoly-game-board-game-fun-1984400/)
+
+**Monopoly Game Logic and Nomenclature** [Hasbro, Inc.] (https://corporate.hasbro.com/en-us)

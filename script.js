@@ -277,9 +277,15 @@ dispMoney = (ply) => {
 
 dispHand = (ply) => {
   if (ply === p1) {
-    ply1HandDisp.innerText = p1.propsOwned;
+    ply1HandDisp.innerText = '';
+    for (let i = 0; i < p1.propsOwned.length; i++) {
+      ply1HandDisp.innerText += ' ' + `   ${p1.propsOwned[i]} ` + ' ';
+    }
   } else if (ply === p2) {
-    ply2HandDisp.innerText = p2.propsOwned;
+    ply2HandDisp.innerText = '';
+    for (let i = 0; i < p2.propsOwned.length; i++) {
+      ply2HandDisp.innerText += ' ' + `   ${p2.propsOwned[i]} ` + ' ';
+    }
   }
 };
 
