@@ -105,12 +105,12 @@ class player {
     this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
-    this.bankAcc = 1500;
+    this.bankAcc = 300;
     this.propsOwned = [];
     this.propsOwnedSpcs = [];
     this.propsOwnedObjs = [];
     this.totPropsVal = 0;
-    this.totVal = 1500;
+    this.totVal = 300;
     this.jailCount = 0;
     this.doublesCount = 0;
   }
@@ -130,6 +130,7 @@ class colProperty {
     this.curHouses = 0;
     this.owner = null;
     this.isMort = false;
+    this.type = 'color';
   }
 }
 let medit = new colProperty('Mediteranean Avenue', 60, 1, 50);
@@ -165,6 +166,7 @@ class rrProperty {
     this.isOwned = false;
     this.owner = null;
     this.isMort = false;
+    this.type = 'nonColor';
   }
 }
 let readR = new rrProperty('Reading Railroad', 5);
@@ -182,6 +184,7 @@ class utilProperty {
     this.isOwned = false;
     this.owner = null;
     this.isMort = false;
+    this.type = 'nonColor';
   }
 }
 let elec = new utilProperty('Electric Company', 12);
@@ -242,11 +245,22 @@ noBtn.style.opacity = 0;
 const p1MortBtn = document.querySelector('#p1MortBtn');
 const p2MortBtn = document.querySelector('#p2MortBtn');
 
+const p1UnMortBtn = document.querySelector('#p1UnMortBtn');
+const p2UnMortBtn = document.querySelector('#p2UnMortBtn');
+
 const p2BuyHouseBtn = document.querySelector('#p2BuyHouseBtn');
 const p1BuyHouseBtn = document.querySelector('#p1BuyHouseBtn');
 
 let freeParkPot = 0;
+
+let currentPly = null;
+
+let mortActive = false;
+let unMortActive = false;
+let buyHouseActive = false;
+
 p2MortBtn.style.opacity = 0;
+p2UnMortBtn.style.opacity = 0;
 p2BuyHouseBtn.style.opacity = 0;
 
 //////////////////////
@@ -295,6 +309,7 @@ gainMoney = (ply, amtGain) => {
   ply.bankAcc += amtGain;
   dispMoney(ply);
   ply.totVal += amtGain;
+  checkWin();
 };
 
 buyProp = (ply, prop) => {
@@ -404,16 +419,25 @@ checkSpc = (ply) => {
 };
 
 rollDice = (ply) => {
+  mortActive = false;
+  unMortActive = false;
+  buyHouseActive = false;
   if (ply === p1) {
+    currentPly = 'p2';
     p1MortBtn.style.opacity = 0;
     p2MortBtn.style.opacity = 1;
     p1BuyHouseBtn.style.opacity = 0;
     p2BuyHouseBtn.style.opacity = 1;
+    p1UnMortBtn.style.opacity = 0;
+    p2UnMortBtn.style.opacity = 1;
   } else if (ply === p2) {
+    currentPly = 'p1';
     p2MortBtn.style.opacity = 0;
     p1MortBtn.style.opacity = 1;
     p2BuyHouseBtn.style.opacity = 0;
     p1BuyHouseBtn.style.opacity = 1;
+    p2UnMortBtn.style.opacity = 0;
+    p1UnMortBtn.style.opacity = 1;
   }
   notBox.style.opacity = 0;
   let dice1 = Math.ceil(Math.random() * 6);
@@ -459,60 +483,246 @@ checkWin = () => {
   }
 };
 
-mortProp = (ply) => {
-  createNot('Click on the property you want to mortgage.');
-  const propSpcs = ply.propsOwnedSpcs;
-  const propObjs = ply.propsOwnedObjs;
+mortProp1 = () => {
+  createNot(
+    'Click on the property you want to mortgage. This will also sell any houses it currently has.'
+  );
+  const propSpcs = p1.propsOwnedSpcs;
+  const propObjs = p1.propsOwnedObjs;
   for (let i = 0; i < propSpcs.length; i++) {
     propSpcs[i].onclick = () => {
-      if (propObjs[i].isMort === true) {
-        createNot(`${propObjs[i].name} is already mortgaged.`);
-      } else {
-        propObjs[i].isMort = true;
-        createNot(
-          `${propObjs[i].name} is now mortgaged. Collect $${
-            propObjs[i].cost / 2
-          }.`
-        );
-        gainMoney(ply, propObjs[i].cost / 2);
-        ply.totVal -= propObjs[i].cost / 2;
+      if (currentPly === 'p1') {
+        if (mortActive === true) {
+          if (propObjs[i].isMort === true) {
+            createNot(`${propObjs[i].name} is already mortgaged.`);
+            mortActive = false;
+          } else {
+            propObjs[i].isMort = true;
+            if (propObjs[i].type === 'color') {
+              createNot(
+                `${propObjs[i].name} is now mortgaged. Collect $${
+                  propObjs[i].cost / 2
+                } for mortaging the property and $${
+                  propObjs[i].curHouses * (propObjs[i].houseCost / 2)
+                } for selling its ${propObjs[i].curHouses} house(s).`
+              );
+              gainMoney(p1, propObjs[i].cost / 2);
+              gainMoney(
+                p1,
+                propObjs[i].curHouses * (propObjs[i].houseCost / 2)
+              );
+              p1.totVal -=
+                propObjs[i].cost / 2 +
+                propObjs[i].curHouses * (propObjs[i].houseCost / 2);
+              mortActive = false;
+            } else {
+              createNot(
+                `${propObjs[i].name} is now mortgaged. Collect $${
+                  propObjs[i].cost / 2
+                }.`
+              );
+              gainMoney(p1, propObjs[i].cost / 2);
+              p1.totVal -= propObjs[i].cost / 2;
+              mortActive = false;
+            }
+          }
+        }
       }
     };
   }
 };
 
-buyHouse = (ply) => {
-  createNot('Click on a property to purchase a house for it.');
-  const propSpcs = ply.propsOwnedSpcs;
-  const propObjs = ply.propsOwnedObjs;
+mortProp2 = () => {
+  createNot(
+    'Click on the property you want to mortgage. This will also sell any houses it currently has.'
+  );
+  const propSpcs = p2.propsOwnedSpcs;
+  const propObjs = p2.propsOwnedObjs;
   for (let i = 0; i < propSpcs.length; i++) {
     propSpcs[i].onclick = () => {
-      if (
-        propObjs[i].spcNum === 5 ||
-        propObjs[i].spcNum === 15 ||
-        propObjs[i].spcNum === 25 ||
-        propObjs[i].spcNum === 35 ||
-        propObjs[i].spcNum === 12 ||
-        propObjs[i].spcNum === 28
-      ) {
-        createNot(
-          `You can't build houses on ${propObjs[i].name} because it is not a color set property.`
-        );
-      } else if (propObjs[i].isMort === true) {
-        createNot(
-          `${propObjs[i].name} is mortgaged. You must unmortgage it before you can buy a house.`
-        );
-      } else if (propObjs[i].curHouses >= 5) {
-        createNot(
-          `${propObjs[i].name} already has the maximum number of houses and costs $${propObjs[i].rent} to land on.`
-        );
-      } else {
-        propObjs[i].curHouses += 1;
-        propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
-        createNot(
-          `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
-        );
-        gainMoney(ply, -1 * propObjs[i].houseCost);
+      if (currentPly === 'p2') {
+        if (mortActive === true) {
+          if (propObjs[i].isMort === true) {
+            createNot(`${propObjs[i].name} is already mortgaged.`);
+            mortActive = false;
+          } else {
+            propObjs[i].isMort = true;
+            if (propObjs[i].type === 'color') {
+              createNot(
+                `${propObjs[i].name} is now mortgaged. Collect $${
+                  propObjs[i].cost / 2
+                } for mortaging the property and $${
+                  propObjs[i].curHouses * (propObjs[i].houseCost / 2)
+                } for selling its ${propObjs[i].curHouses} house(s).`
+              );
+              gainMoney(p2, propObjs[i].cost / 2);
+              gainMoney(
+                p2,
+                propObjs[i].curHouses * (propObjs[i].houseCost / 2)
+              );
+              p2.totVal -=
+                propObjs[i].cost / 2 +
+                propObjs[i].curHouses * (propObjs[i].houseCost / 2);
+              mortActive = false;
+            } else {
+              createNot(
+                `${propObjs[i].name} is now mortgaged. Collect $${
+                  propObjs[i].cost / 2
+                }.`
+              );
+              gainMoney(p2, propObjs[i].cost / 2);
+              p2.totVal -= propObjs[i].cost / 2;
+              mortActive = false;
+            }
+          }
+        }
+      }
+    };
+  }
+};
+
+unMortProp1 = () => {
+  createNot('Click on the property you want to unmortgage.');
+  const propSpcs = p1.propsOwnedSpcs;
+  const propObjs = p1.propsOwnedObjs;
+  for (let i = 0; i < propSpcs.length; i++) {
+    if (currentPly === 'p1') {
+      if (unMortActive === true) {
+        propSpcs[i].onclick = () => {
+          if (propObjs[i].isMort === false) {
+            createNot(`${propObjs[i].name} is not mortgaged.`);
+            unMortActive = false;
+          } else {
+            propObjs[i].isMort = false;
+            createNot(
+              `${propObjs[i].name} is now unmortgaged. Pay $${
+                (propObjs[i].cost / 2) * 1.1
+              }.`
+            );
+            gainMoney(p1, (propObjs[i].cost / 2) * -1.1);
+            p1.totVal += propObjs[i].cost / 2;
+            unMortActive = false;
+          }
+        };
+      }
+    }
+  }
+};
+
+unMortProp2 = () => {
+  createNot('Click on the property you want to unmortgage.');
+  const propSpcs = p2.propsOwnedSpcs;
+  const propObjs = p2.propsOwnedObjs;
+  for (let i = 0; i < propSpcs.length; i++) {
+    if (currentPly === 'p2') {
+      if (unMortActive === true) {
+        propSpcs[i].onclick = () => {
+          if (propObjs[i].isMort === false) {
+            createNot(`${propObjs[i].name} is not mortgaged.`);
+            unMortActive = false;
+          } else {
+            propObjs[i].isMort = false;
+            createNot(
+              `${propObjs[i].name} is now unmortgaged. Pay $${
+                (propObjs[i].cost / 2) * 1.1
+              }.`
+            );
+            gainMoney(p2, (propObjs[i].cost / 2) * -1.1);
+            p2.totVal += propObjs[i].cost / 2;
+            unMortActive = false;
+          }
+        };
+      }
+    }
+  }
+};
+
+buyHouse1 = () => {
+  createNot('Click on a property to purchase a house for it.');
+  const propSpcs = p1.propsOwnedSpcs;
+  const propObjs = p1.propsOwnedObjs;
+  for (let i = 0; i < propSpcs.length; i++) {
+    propSpcs[i].onclick = () => {
+      if (currentPly === 'p1') {
+        if (buyHouseActive === true) {
+          if (
+            propObjs[i].spcNum === 5 ||
+            propObjs[i].spcNum === 15 ||
+            propObjs[i].spcNum === 25 ||
+            propObjs[i].spcNum === 35 ||
+            propObjs[i].spcNum === 12 ||
+            propObjs[i].spcNum === 28
+          ) {
+            createNot(
+              `You can't build houses on ${propObjs[i].name} because it is not a color set property.`
+            );
+            buyHouseActive = false;
+          } else if (propObjs[i].isMort === true) {
+            createNot(
+              `${propObjs[i].name} is mortgaged. You must unmortgage it before you can buy a house.`
+            );
+            buyHouseActive = false;
+          } else if (propObjs[i].curHouses >= 5) {
+            createNot(
+              `${propObjs[i].name} already has the maximum number of houses and costs $${propObjs[i].rent} to land on.`
+            );
+            buyHouseActive = false;
+          } else {
+            propObjs[i].curHouses += 1;
+            propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
+            createNot(
+              `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
+            );
+            gainMoney(p1, -1 * propObjs[i].houseCost);
+            p1.totVal += propObjs[i].houseCost / 2;
+            buyHouseActive = false;
+          }
+        }
+      }
+    };
+  }
+};
+buyHouse2 = () => {
+  createNot('Click on a property to purchase a house for it.');
+  const propSpcs = p2.propsOwnedSpcs;
+  const propObjs = p2.propsOwnedObjs;
+  for (let i = 0; i < propSpcs.length; i++) {
+    propSpcs[i].onclick = () => {
+      if (currentPly === 'p2') {
+        if (buyHouseActive === true) {
+          if (
+            propObjs[i].spcNum === 5 ||
+            propObjs[i].spcNum === 15 ||
+            propObjs[i].spcNum === 25 ||
+            propObjs[i].spcNum === 35 ||
+            propObjs[i].spcNum === 12 ||
+            propObjs[i].spcNum === 28
+          ) {
+            createNot(
+              `You can't build houses on ${propObjs[i].name} because it is not a color set property.`
+            );
+            buyHouseActive = false;
+          } else if (propObjs[i].isMort === true) {
+            createNot(
+              `${propObjs[i].name} is mortgaged. You must unmortgage it before you can buy a house.`
+            );
+            buyHouseActive = false;
+          } else if (propObjs[i].curHouses >= 5) {
+            createNot(
+              `${propObjs[i].name} already has the maximum number of houses and costs $${propObjs[i].rent} to land on.`
+            );
+            buyHouseActive = false;
+          } else {
+            propObjs[i].curHouses += 1;
+            propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
+            createNot(
+              `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
+            );
+            gainMoney(p2, -1 * propObjs[i].houseCost);
+            p2.totVal += propObjs[i].houseCost / 2;
+            buyHouseActive = false;
+          }
+        }
       }
     };
   }
@@ -526,7 +736,6 @@ rollBtn1.addEventListener('click', () => {
   rollBtn1.style.opacity = 0;
   rollBtn2.style.opacity = 1;
 });
-
 rollBtn2.addEventListener('click', () => {
   rollDice(p2);
   rollBtn2.style.opacity = 0;
@@ -542,7 +751,6 @@ ply1NameBtn.addEventListener('click', () => {
   let firstLet = p1.persName[0];
   document.getElementById('token1').innerText = firstLet.toUpperCase();
 });
-
 ply2NameBtn.addEventListener('click', () => {
   p2NameInput = document.getElementById('ply2Input').value;
   p2.persName = p2NameInput;
@@ -553,20 +761,47 @@ ply2NameBtn.addEventListener('click', () => {
   document.getElementById('token2').innerText = firstLet.toUpperCase();
 });
 
-p1MortBtn.addEventListener('click', () => {
-  mortProp(p1);
-});
+p1MortBtn.onclick = () => {
+  mortActive = true;
+  unMortActive = false;
+  buyHouseActive = false;
+  mortProp1();
+};
+// ASK which one is better between these
+// p1MortBtn.addEventListener('click', () => {
+//   mortProp(p1);
+// });
+p2MortBtn.onclick = () => {
+  mortActive = true;
+  unMortActive = false;
+  buyHouseActive = false;
+  mortProp2();
+};
 
-p2MortBtn.addEventListener('click', () => {
-  mortProp(p2);
-});
+p1UnMortBtn.onclick = () => {
+  unMortActive = true;
+  mortActive = false;
+  buyHouseActive = false;
+  unMortProp1();
+};
+p2UnMortBtn.onclick = () => {
+  unMortActive = true;
+  mortActive = false;
+  buyHouseActive = false;
+  unMortProp2();
+};
 
-p1BuyHouseBtn.addEventListener('click', () => {
-  buyHouse(p1);
-});
-
-p2BuyHouseBtn.addEventListener('click', () => {
-  buyHouse(p2);
-});
+p1BuyHouseBtn.onclick = () => {
+  buyHouseActive = true;
+  unMortActive = false;
+  mortActive = false;
+  buyHouse1();
+};
+p2BuyHouseBtn.onclick = () => {
+  buyHouseActive = true;
+  unMortActive = false;
+  mortActive = false;
+  buyHouse2();
+};
 
 //////////////////////
