@@ -68,8 +68,9 @@ body {
 }
 
 .bankDisp,
-.handTitle {
-  font-size: 3.5vmin;
+.handTitle,
+.totValDisp {
+  font-size: 3vmin;
 }
 
 .handDisp {

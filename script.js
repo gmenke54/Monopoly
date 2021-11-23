@@ -86,6 +86,8 @@ const ply1HandDisp = document.getElementById('ply1HandDisp');
 const ply2HandDisp = document.getElementById('ply2HandDisp');
 const ply2BankDisp = document.getElementById('ply2BankDisp');
 const ply1BankDisp = document.getElementById('ply1BankDisp');
+const ply1ValDisp = document.getElementById('ply1ValDisp');
+const ply2ValDisp = document.getElementById('ply2ValDisp');
 
 const notBox = document.getElementById('noticeBox');
 const notMsg = document.getElementById('noticeMessage');
@@ -278,6 +280,14 @@ dispMoney = (ply) => {
   checkWin();
 };
 
+dispVal = (ply) => {
+  if (ply === p1) {
+    ply1ValDisp.innerText = p1.totVal;
+  } else if (ply === p2) {
+    ply2ValDisp.innerText = p2.totVal;
+  }
+};
+
 dispHand = (ply) => {
   if (ply === p1) {
     ply1HandDisp.innerText = '';
@@ -325,13 +335,14 @@ gainMoney = (ply, amtGain) => {
   ply.bankAcc += amtGain;
   dispMoney(ply);
   ply.totVal += amtGain;
+  dispVal(ply);
   checkWin();
 };
 
 buyProp = (ply, prop) => {
   const propName = prop.name;
   const propCost = prop.cost;
-  notMsg.innerText = `You landed on ${propName} which costs $${propCost}. Would you like to purchase ${propName}?`;
+  notMsg.innerText = `${ply.persName} landed on ${propName} which costs $${propCost}. Would you like to purchase ${propName}?`;
   notBox.style.opacity = 1;
   yesBtn.style.opacity = 1;
   noBtn.style.opacity = 1;
@@ -340,6 +351,7 @@ buyProp = (ply, prop) => {
     if (checkMoney(ply, propCost) === true) {
       gainMoney(ply, -1 * prop.cost);
       ply.totVal += prop.cost / 2;
+      dispVal(ply);
       ply.propsOwned.push(prop.name);
       ply.propsOwnedSpcs.push(prop.spc);
       ply.propsOwnedObjs.push(prop);
@@ -375,10 +387,12 @@ payRent = (curPly, owner, prop) => {
     gainMoney(curPly, -1 * prop.rent);
     gainMoney(owner, prop.rent);
     createNotEndTurn(
-      `You landed on ${propName}. Pay ${ownerName} $${propRent}.`
+      `${curPly.persName} landed on ${propName}. Pay ${ownerName} $${propRent}.`
     );
   } else if (prop.isMort === true) {
-    createNotEndTurn(`You landed on ${propName} but it is mortgaged.`);
+    createNotEndTurn(
+      `${curPly.persName} landed on ${propName} but it is mortgaged.`
+    );
   }
 };
 
@@ -400,30 +414,30 @@ checkOwned = (ply) => {
 
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
-    createNotEndTurn('You landed on go, collect an extra $100.');
+    createNotEndTurn(`${ply.persName} landed on go, collect an extra $100.`);
     gainMoney(ply, 100);
   } else if (ply.curPos === 30) {
     createNot('Go directly to jail. Do not pass go. Do not collect $200.');
     pauseJumpPos(ply, 10);
   } else if (ply.curPos === 4) {
-    createNotEndTurn('You landed on income taxes. Pay $200.');
+    createNotEndTurn(`${ply.persName} landed on income taxes. Pay $200.`);
     gainMoney(ply, -200);
     freeParkPot += 200;
   } else if (ply.curPos === 10) {
-    createNotEndTurn('You are just visiting jail.');
+    createNotEndTurn(`${ply.persName} is just visiting jail.`);
   } else if (ply.curPos === 38) {
-    createNotEndTurn('You landed on luxury taxes. Pay $75.');
+    createNotEndTurn(`${ply.persName} landed on luxury taxes. Pay $75.`);
     gainMoney(ply, -75);
     freeParkPot += 75;
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
-      'You landed on a chance space. You will now jump to a random space on the board. Good luck!'
+      `${ply.persName} landed on a chance space. You will now jump to a random space on the board. Good luck!`
     );
     let randomSpc = Math.floor(Math.random() * 39);
     pauseJumpPos(ply, randomSpc);
   } else if (ply.curPos === 20) {
     createNotEndTurn(
-      `You landed on Free Parking. Collect the $${freeParkPot} jackpot!`
+      `${ply.persName} landed on Free Parking. Collect the $${freeParkPot} jackpot!`
     );
     gainMoney(ply, freeParkPot);
     freeParkPot = 0;
@@ -433,12 +447,12 @@ checkSpc = (ply) => {
     let fateDecider = Math.ceil(Math.random() * 2);
     if (fateDecider === 1) {
       createNotEndTurn(
-        `You landed on Community Chest and today is your lucky day. Collect $${randomGain}!`
+        `${ply.persName} landed on Community Chest and today is their lucky day. Collect $${randomGain}!`
       );
       gainMoney(ply, randomGain);
     } else if (fateDecider === 2) {
       createNotEndTurn(
-        `Uh-oh! You landed on Community Chest and it's empty. Pay $${randomLoss}.`
+        `Uh-oh! ${ply.persName} landed on Community Chest and it's empty. Pay $${randomLoss}.`
       );
       gainMoney(ply, -1 * randomLoss);
       freeParkPot += randomLoss;
@@ -524,11 +538,11 @@ checkWin = () => {
   if (p1.totVal < 0) {
     setTimeout(() => {
       window.location.href = 'gameover.html' + '#' + p2.persName;
-    }, 3000);
+    }, 2000);
   } else if (p2.totVal < 0) {
     setTimeout(() => {
       window.location.href = 'gameover.html' + '#' + p1.persName;
-    }, 3000);
+    }, 2000);
   }
 };
 
@@ -564,6 +578,7 @@ mortProp1 = () => {
                 propObjs[i].cost / 2 +
                 propObjs[i].curHouses * (propObjs[i].houseCost / 2);
               mortActive = false;
+              dispVal(p1);
             } else {
               createNot(
                 `${propObjs[i].name} is now mortgaged. Collect $${
@@ -573,6 +588,7 @@ mortProp1 = () => {
               gainMoney(p1, propObjs[i].cost / 2);
               p1.totVal -= propObjs[i].cost / 2;
               mortActive = false;
+              dispVal(p1);
             }
           }
         }
@@ -613,6 +629,7 @@ mortProp2 = () => {
                 propObjs[i].cost / 2 +
                 propObjs[i].curHouses * (propObjs[i].houseCost / 2);
               mortActive = false;
+              dispVal(p2);
             } else {
               createNot(
                 `${propObjs[i].name} is now mortgaged. Collect $${
@@ -622,6 +639,7 @@ mortProp2 = () => {
               gainMoney(p2, propObjs[i].cost / 2);
               p2.totVal -= propObjs[i].cost / 2;
               mortActive = false;
+              dispVal(p2);
             }
           }
         }
@@ -663,6 +681,7 @@ unMortProp1 = () => {
               );
               gainMoney(p1, (propObjs[i].cost / 2) * -1.1);
               p1.totVal += propObjs[i].cost / 2;
+              dispVal(p1);
               unMortActive = false;
             }
           }
@@ -694,6 +713,7 @@ unMortProp2 = () => {
               gainMoney(p2, (propObjs[i].cost / 2) * -1.1);
               p2.totVal += propObjs[i].cost / 2;
               unMortActive = false;
+              dispVal(p2);
             }
           }
         };
@@ -744,6 +764,7 @@ buyHouse1 = () => {
               };
               gainMoney(p1, -1 * propObjs[i].houseCost);
               p1.totVal += propObjs[i].houseCost / 2;
+              dispVal(p1);
             }
           }
         }
@@ -793,6 +814,7 @@ buyHouse2 = () => {
               };
               gainMoney(p2, -1 * propObjs[i].houseCost);
               p2.totVal += propObjs[i].houseCost / 2;
+              dispVal(p2);
             }
           }
         }
