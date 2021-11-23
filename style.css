@@ -127,11 +127,9 @@ body {
 }
 
 #boardCenter {
-  font-size: 6vh;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6vh 6vh 1fr 30vh 1fr 6vh 6vh;
 }
 
 .token {
@@ -148,6 +146,31 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+#diceCont {
+  display: flex;
+  justify-content: center;
+}
+
+#firstDice {
+  width: 4.5vh;
+  background-image: url('resources/dice1.png');
+  background-size: cover;
+  margin: 0 1vmin;
+  opacity: 0;
+}
+#secDice {
+  width: 4.5vh;
+  background-image: url('resources/dice1.png');
+  background-size: cover;
+  margin: 0 1vmin;
+  opacity: 0;
+}
+
+#noticeCont {
+  display: flex;
+  justify-content: center;
+}
+
 #noticeBox {
   background-color: white;
   border: 0.4vh solid black;
@@ -155,12 +178,17 @@ body {
   height: 30vh;
   width: 45vh;
   text-align: center;
-  display: flex;
   flex-direction: column;
+  display: flex;
   justify-content: space-around;
   align-items: center;
   font-size: 3vh;
   opacity: 0;
+}
+
+#aCont {
+  display: flex;
+  justify-content: flex-end;
 }
 
 a {
@@ -169,7 +197,9 @@ a {
   font-size: 1.4vmin;
   text-decoration: none;
   text-align: center;
-  border-radius: 4vmin;
+  border-radius: 2vmin;
+  max-width: 20vmin;
+  padding: 0 1vmin;
 }
 a:hover {
   color: red;

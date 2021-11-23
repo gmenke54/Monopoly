@@ -250,6 +250,9 @@ const p2UnMortBtn = document.querySelector('#p2UnMortBtn');
 const p2BuyHouseBtn = document.querySelector('#p2BuyHouseBtn');
 const p1BuyHouseBtn = document.querySelector('#p1BuyHouseBtn');
 
+const d1Disp = document.querySelector('#firstDice');
+const d2Disp = document.querySelector('#secDice');
+
 let freeParkPot = 0;
 
 let currentPly = null;
@@ -449,10 +452,38 @@ rollDice = (ply) => {
     p1UnMortBtn.style.opacity = 1;
   }
   notBox.style.opacity = 0;
+  d1Disp.style.opacity = 1;
+  d2Disp.style.opacity = 1;
   let dice1 = Math.ceil(Math.random() * 6);
   let dice2 = Math.ceil(Math.random() * 6);
+  if (dice1 === 1) {
+    d1Disp.style.backgroundImage = "url('resources/dice1.png')";
+  } else if (dice1 === 2) {
+    d1Disp.style.backgroundImage = "url('resources/dice2.png')";
+  } else if (dice1 === 3) {
+    d1Disp.style.backgroundImage = "url('resources/dice3.png')";
+  } else if (dice1 === 4) {
+    d1Disp.style.backgroundImage = "url('resources/dice4.png')";
+  } else if (dice1 === 5) {
+    d1Disp.style.backgroundImage = "url('resources/dice5.png')";
+  } else if (dice1 === 6) {
+    d1Disp.style.backgroundImage = "url('resources/dice6.png')";
+  }
+  if (dice2 === 1) {
+    d2Disp.style.backgroundImage = "url('resources/dice1.png')";
+  } else if (dice2 === 2) {
+    d2Disp.style.backgroundImage = "url('resources/dice2.png')";
+  } else if (dice2 === 3) {
+    d2Disp.style.backgroundImage = "url('resources/dice3.png')";
+  } else if (dice2 === 4) {
+    d2Disp.style.backgroundImage = "url('resources/dice4.png')";
+  } else if (dice2 === 5) {
+    d2Disp.style.backgroundImage = "url('resources/dice5.png')";
+  } else if (dice2 === 6) {
+    d2Disp.style.backgroundImage = "url('resources/dice6.png')";
+  }
   let roll = dice1 + dice2;
-  alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
+  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
   ply.curPos += roll;
   if (ply.curPos >= spacesArr.length) {
     pausePassGo(ply);

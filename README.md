@@ -76,6 +76,8 @@ Final Game Board Screenshot:
 
 **Monopoly Tile Images for Gameboard:** [Pixabay](https://pixabay.com/illustrations/monopoly-game-board-game-fun-1984400/)
 
+**Dice Images** [Pixabay](https://pixabay.com/vectors/dice-games-game-six-sided-face-26772/)
+
 **Monopoly Game Logic and Nomenclature:** [Hasbro, Inc.](https://corporate.hasbro.com/en-us)
 
 **Logo Designed Using:** [Canva](https://www.canva.com/)
