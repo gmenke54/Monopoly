@@ -4,8 +4,6 @@ body {
   grid-template-rows: 98vh;
 }
 
-/* -------------------------------------------- */
-
 .sides {
   display: flex;
   justify-content: center;
@@ -94,8 +92,6 @@ body {
 .nameInput {
   margin-top: 0;
 }
-
-/* -------------------------------------------- */
 
 #gameBoard {
   display: grid;

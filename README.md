@@ -53,12 +53,14 @@ Game Board Mock-up:
 
 ## **_Getting Started_**
 
-1. Press Start
-2. On your turn:
-   - Trade with other player's (optional)
-   - Roll the dice
+1. Press start
+2. Enter each player's first name into the corresponding box
+3. Player 1 (blue) goes first
+4. On your turn:
+   - Perform actions (optional)
+   - Roll the dice to end your turn
    - Follow prompts for your roll
-3. Take all your friend's money!
+5. Take all your friend's money!
 
 ---
 
@@ -66,6 +68,8 @@ Game Board Mock-up:
 
 **Monopoly Title Image:** [DuckDuckGo](https://duckduckgo.com/?t=hc&va=b)
 
-**Monopoly Tile Images for Gameboard:** [Pixabay] (https://pixabay.com/illustrations/monopoly-game-board-game-fun-1984400/)
+**Monopoly Tile Images for Gameboard:** [Pixabay](https://pixabay.com/illustrations/monopoly-game-board-game-fun-1984400/)
 
-**Monopoly Game Logic and Nomenclature** [Hasbro, Inc.] (https://corporate.hasbro.com/en-us)
+**Monopoly Game Logic and Nomenclature:** [Hasbro, Inc.](https://corporate.hasbro.com/en-us)
+
+**Logo Designed Using:** [Canva](https://www.canva.com/)
