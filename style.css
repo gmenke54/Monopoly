@@ -102,7 +102,7 @@ body {
 
 #boardCenter {
   border: 0.15vh solid black;
-  background-image: url('resources/GRANTOPOLY.png');
+  background-image: url('resources/grant.png');
   background-size: cover;
 }
 

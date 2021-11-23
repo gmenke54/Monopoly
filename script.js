@@ -363,6 +363,7 @@ buyProp = (ply, prop) => {
     yesBtn.style.opacity = 0;
     noBtn.style.opacity = 0;
     clearCardBtn.style.opacity = 1;
+    changeTurn();
   };
 };
 
@@ -702,7 +703,7 @@ unMortProp2 = () => {
 };
 
 buyHouse1 = () => {
-  createNot('Player 1, Click on a property to purchase a house for it.');
+  createNot('Click on a property to purchase a house for it.');
   const propSpcs = p1.propsOwnedSpcs;
   const propObjs = p1.propsOwnedObjs;
   for (let i = 0; i < propSpcs.length; i++) {
@@ -735,12 +736,14 @@ buyHouse1 = () => {
             if (checkMoney(p1, propObjs[i].houseCost) === true) {
               propObjs[i].curHouses += 1;
               propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
-              createNot(
-                `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
-              );
+              notMsg.innerText = `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`;
+              notBox.style.opacity = 1;
+              clearCardBtn.onclick = () => {
+                notBox.style.opacity = 0;
+                buyHouseActive = false;
+              };
               gainMoney(p1, -1 * propObjs[i].houseCost);
               p1.totVal += propObjs[i].houseCost / 2;
-              buyHouseActive = false;
             }
           }
         }
@@ -749,7 +752,7 @@ buyHouse1 = () => {
   }
 };
 buyHouse2 = () => {
-  createNot('Player 2, Click on a property to purchase a house for it.');
+  createNot('Click on a property to purchase a house for it.');
   const propSpcs = p2.propsOwnedSpcs;
   const propObjs = p2.propsOwnedObjs;
   for (let i = 0; i < propSpcs.length; i++) {
@@ -782,12 +785,14 @@ buyHouse2 = () => {
             if (checkMoney(p2, propObjs[i].houseCost) === true) {
               propObjs[i].curHouses += 1;
               propObjs[i].rent = Math.floor(propObjs[i].rent * 2.5);
-              createNot(
-                `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`
-              );
+              notMsg.innerText = `You purchased a house for ${propObjs[i].name} which now costs $${propObjs[i].rent} to land on.`;
+              notBox.style.opacity = 1;
+              clearCardBtn.onclick = () => {
+                notBox.style.opacity = 0;
+                buyHouseActive = false;
+              };
               gainMoney(p2, -1 * propObjs[i].houseCost);
               p2.totVal += propObjs[i].houseCost / 2;
-              buyHouseActive = false;
             }
           }
         }
@@ -818,23 +823,11 @@ changeTurn = () => {
 rollBtn1.addEventListener('click', () => {
   rollDice(p1);
   rollBtn1.style.opacity = 0;
-  // setTimeout(
-  //   (rollBtnApp = () => {
-  //     rollBtn2.style.opacity = 1;
-  //   }),
-  //   2000
-  // );
 });
 
 rollBtn2.addEventListener('click', () => {
   rollDice(p2);
   rollBtn2.style.opacity = 0;
-  // setTimeout(
-  //   (rollBtnApp = () => {
-  //     rollBtn1.style.opacity = 1;
-  //   }),
-  //   2000
-  // );
 });
 
 ply1NameBtn.addEventListener('click', () => {
