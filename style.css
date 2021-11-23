@@ -12,22 +12,88 @@ body {
   align-items: flex-end;
 } */
 
+/* -------------------------------------------- */
+
+.sides {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* add #play2disp here */
 #play1disp {
   background-color: rgb(151, 174, 250);
   background-image: linear-gradient(
     to bottom right,
-    rgb(177, 177, 255),
-    rgb(0, 35, 148)
+    rgb(168, 183, 240),
+    rgb(0, 21, 89)
   );
-  margin: 3vh;
+  margin: 1vh;
   padding: 1vh;
-  border: 0.5vh solid black;
+  border: 0.6vh solid black;
   border-radius: 3vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: space-between;
+  font-family: Arial, Helvetica, sans-serif;
+  max-height: 70vh;
 }
+
+.plyTitle,
+.nameInput,
+.rollBtns,
+.bankDisp,
+.handTitle,
+.handDisp,
+.btnBar {
+  margin: 2vh;
+}
+
+.btns {
+  height: 6vh;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.btnBar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btns,
+#ply1SubName {
+  background-color: whitesmoke;
+  color: black;
+  border-radius: 2vh;
+  border-color: rgb(180, 179, 179);
+}
+
+#ply1Input,
+#ply1SubName {
+  border-radius: 0.6vh;
+}
+
+h1 {
+  font-size: 6.5vh;
+}
+
+h4 {
+  font-size: 3vh;
+}
+
+h5 {
+  font-size: 2vh;
+}
+
+.handDisp {
+  margin-top: 0;
+}
+
+.handTitle {
+  margin-bottom: 0;
+}
+
+/* -------------------------------------------- */
 
 #gameBoard {
   display: grid;
@@ -96,18 +162,6 @@ body {
   align-items: center;
   font-size: 3vh;
   opacity: 0;
-}
-
-.handDisp {
-  display: flex;
-  flex-direction: column;
-}
-
-.plyTitle {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2px;
 }
 
 #go {

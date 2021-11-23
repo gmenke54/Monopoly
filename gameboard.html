@@ -8,26 +8,26 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <section>
+  <section class="sides">
     <section id="play1disp">
-      <div class="plyTitle">
-        <h1 id="ply1NameDisp">Player 1</h1>
-        <button id="rollBtn1">Roll Dice</button>
-      </div>
-      <div id="ply1NameInput">
+      <h1 id="ply1NameDisp" class="plyTitle">Player 1</h1>
+      <div id="ply1NameInput" class="nameInput">
         <input type="text" id="ply1Input" value="" placeholder="enter name here">
         <button id="ply1SubName">Submit</button>
       </div>
-      <h4><span id="nameHandDisp1">Player 1</span>'s hand:</h4>
-      <h5 id="ply1HandDisp" class="handDisp"></h5>
+      <button id="rollBtn1" class="rollBtns btns">Roll Dice</button>
       <h4 class="bankDisp">Money: $<span id="ply1BankDisp">1000</span> </h4>
-      <button id="p1MortBtn">Mortgage</button>
-      <button id="p1UnMortBtn">Unmortgage</button>
-      <button id="p1BuyHouseBtn">Buy House</button>
+      <h4 class="handTitle"><span id="nameHandDisp1">Player 1</span>'s hand:</h4>
+      <h5 id="ply1HandDisp" class="handDisp"></h5>
+      <section class="btnBar">
+        <button id="p1MortBtn" class="btns">Mortgage</button>
+        <button id="p1UnMortBtn" class="btns">Unmortgage</button>
+        <button id="p1BuyHouseBtn" class="btns">Buy House</button>
+      </section>
     </section>
-    <a href="index.html">
+    <!-- <a href="index.html">
       <h4>Return to Start Page</h4>
-    </a>
+    </a> -->
   </section>
   <section id="gameBoard">
     <div id="freePark" class="spaces">
