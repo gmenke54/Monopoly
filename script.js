@@ -104,12 +104,12 @@ class player {
     this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
-    this.bankAcc = 1000;
+    this.bankAcc = 1500;
     this.propsOwned = [];
     this.propsOwnedSpcs = [];
     this.propsOwnedObjs = [];
     this.totPropsVal = 0;
-    this.totVal = 1000;
+    this.totVal = 1500;
     this.jailCount = 0;
     this.doublesCount = 0;
   }
@@ -159,7 +159,7 @@ class rrProperty {
   constructor(name, spaceNum) {
     this.name = name;
     this.cost = 200;
-    this.rent = 25;
+    this.rent = 100;
     this.spc = spacesArr[spaceNum];
     this.spcNum = spaceNum;
     this.isOwned = false;
@@ -177,7 +177,7 @@ class utilProperty {
   constructor(name, spaceNum) {
     this.name = name;
     this.cost = 150;
-    this.rent = 21;
+    this.rent = 50;
     this.spc = spacesArr[spaceNum];
     this.spcNum = spaceNum;
     this.isOwned = false;
@@ -294,7 +294,6 @@ createNot = (message) => {
   notBox.style.opacity = 1;
   clearCardBtn.addEventListener('click', () => {
     notBox.style.opacity = 0;
-    // add clearTimeout(timeoutID) here referencing the id of the pauseJumpPos ID
   });
 };
 
@@ -392,9 +391,9 @@ checkSpc = (ply) => {
   } else if (ply.curPos === 10) {
     createNot('You are just visiting jail.');
   } else if (ply.curPos === 38) {
-    createNot('You landed on luxury taxes. Pay $100.');
-    gainMoney(ply, -100);
-    freeParkPot += 100;
+    createNot('You landed on luxury taxes. Pay $75.');
+    gainMoney(ply, -75);
+    freeParkPot += 75;
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
     createNot(
       'You landed on a chance space. You will now jump to a random space on the board. Good luck!'
@@ -406,6 +405,7 @@ checkSpc = (ply) => {
       `You landed on Free Parking. Collect the $${freeParkPot} jackpot!`
     );
     gainMoney(ply, freeParkPot);
+    freeParkPot = 0;
   } else if (ply.curPos === 2 || ply.curPos === 17 || ply.curPos === 33) {
     let randomGain = Math.ceil(Math.random() * 150);
     let randomLoss = Math.ceil(Math.random() * 100);
@@ -428,7 +428,6 @@ checkSpc = (ply) => {
 };
 
 rollDice = (ply) => {
-  console.log(p1.totVal, p2.totVal);
   mortActive = false;
   unMortActive = false;
   buyHouseActive = false;
@@ -792,10 +791,6 @@ p1MortBtn.onclick = () => {
   buyHouseActive = false;
   mortProp1();
 };
-// ASK which one is better between these
-// p1MortBtn.addEventListener('click', () => {
-//   mortProp(p1);
-// });
 p2MortBtn.onclick = () => {
   mortActive = true;
   unMortActive = false;

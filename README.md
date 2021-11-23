@@ -26,7 +26,9 @@ This is a browser-based Monopoly Program written in JavaScript which I coded two
 
 Game Board Mock-up:
 ![**mockup**](resources/mockUp.jpeg)
-(will update this to include screenshots of the game upon completion)
+
+Final Game Board Screenshot:
+![**gameboard](resources/screenshot.png)
 
 ---
 
@@ -40,14 +42,16 @@ Game Board Mock-up:
 
 ## **_Roadmap (Future Updates)_**
 
-- ~~Write a proffesional ReadMe~~
-- ~~Write CSS and HTML for basic gameboard structure~~
-- ~~Write HTML for start page (where users enter player names)~~
-- ~~Write HTML for property page~~
 - ~~Write JS OOP to create player classes based on user input~~
 - ~~Write JS OOP to create property classes~~
-- ~~Write JS to create each property class quickly referencing Monopoly game~~
-- Write JS for ~~rollDice, movePlayer,~~ offerToBuy, function
+- ~~Write JS for rollDice, movePlayer, and offerToBuy functions~~
+- Add a dice display instead of the current alert
+- Add logic for rolling doubles
+- Make house icons appear on the property the user buys them for
+- Make it so the user can only buy a house when they have the monopoly
+- Add trading functionality
+- Add a make auction function
+- Add the ability to play with up to 4 players
 
 ---
 
@@ -59,8 +63,10 @@ Game Board Mock-up:
 4. On your turn:
    - Perform actions (optional)
    - Roll the dice to end your turn
-   - Follow prompts for your roll
+   - Follow the prompts for your roll
 5. Take all your friend's money!
+6. Just like real life, Grantopoly allows you to go into debt to pay rent or taxes but not to buy houses or unmortgage properties.
+7. Be careful! If your total value drops below 0, you lose!
 
 ---
 

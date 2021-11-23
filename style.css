@@ -163,6 +163,18 @@ body {
   opacity: 0;
 }
 
+a {
+  color: black;
+  background-color: white;
+  font-size: 1.4vmin;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 4vmin;
+}
+a:hover {
+  color: red;
+}
+
 #go {
   background-image: url('resources/0.png.jpeg');
   background-size: cover;
