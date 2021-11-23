@@ -5,15 +5,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grantopoly</title>
+  <link rel="stylesheet" type="text/css" href="gameOver.css">
 </head>
 <body>
   <section>
-    <h1>Game Over</h1>
-    <h2><span id="winnerDisp"></span> wins!</h2>
+    <img src="resources/gameover.png">
   </section>
-  <section>
+  <section id="winnerLine">
+    <div id="winnerWords"><span id="winnerDisp"></span> wins!</div>
+  </section>
+  <section id="playAgainBtn">
     <a href="index.html">
-      <h2>Play Again</h2>
+      <h2>PLAY AGAIN</h2>
     </a>
   </section>
   <script>
