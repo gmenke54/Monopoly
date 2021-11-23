@@ -8,17 +8,16 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <section class="sides">
     <section id="play1disp">
-      <h1 id="ply1NameDisp" class="plyTitle">Player 1</h1>
+      <div id="ply1NameDisp" class="plyTitle">Player 1</div>
       <div id="ply1NameInput" class="nameInput">
         <input type="text" id="ply1Input" value="" placeholder="enter name here">
         <button id="ply1SubName">Submit</button>
       </div>
       <button id="rollBtn1" class="rollBtns btns">Roll Dice</button>
-      <h4 class="bankDisp">Money: $<span id="ply1BankDisp">1000</span> </h4>
-      <h4 class="handTitle"><span id="nameHandDisp1">Player 1</span>'s hand:</h4>
-      <h5 id="ply1HandDisp" class="handDisp"></h5>
+      <div class="bankDisp">Money: $<span id="ply1BankDisp">1000</span> </div>
+      <div class="handTitle"><span id="nameHandDisp1">Player 1</span>'s hand:</div>
+      <div id="ply1HandDisp" class="handDisp"></div>
       <section class="btnBar">
         <button id="p1MortBtn" class="btns">Mortgage</button>
         <button id="p1UnMortBtn" class="btns">Unmortgage</button>
@@ -28,7 +27,6 @@
     <!-- <a href="index.html">
       <h4>Return to Start Page</h4>
     </a> -->
-  </section>
   <section id="gameBoard">
     <div id="freePark" class="spaces">
     </div>
@@ -96,6 +94,22 @@
     </div>
   </section>
   <section id="play2disp">
+    <div id="ply2NameDisp" class="plyTitle">Player 2</div>
+    <div id="ply2NameInput" class="nameInput">
+      <input type="text" id="ply2Input" value="" placeholder="enter name here">
+      <button id="ply2SubName">Submit</button>
+    </div>
+    <button id="rollBtn2" class="rollBtns btns">Roll Dice</button>
+    <div class="bankDisp">Money: $<span id="ply2BankDisp">1000</span> </div>
+    <div class="handTitle"><span id="nameHandDisp2">Player 2</span>'s hand:</div>
+    <div id="ply2HandDisp" class="handDisp"></div>
+    <section class="btnBar">
+      <button id="p2MortBtn" class="btns">Mortgage</button>
+      <button id="p2UnMortBtn" class="btns">Unmortgage</button>
+      <button id="p2BuyHouseBtn" class="btns">Buy House</button>
+    </section>
+  </section>
+  <!-- <section id="play2disp">
     <div class="plyTitle">
       <h1 id="ply2NameDisp">Player 2</h1>
       <button id="rollBtn2">Roll Dice</button>
@@ -113,7 +127,7 @@
     <a href="index.html">
       <h4>Return to Start Page</h4>
     </a>
-  </section>
+  </section> -->
   <script type="text/javascript" src="script.js"></script>
 </body>
 </html>

@@ -4,14 +4,6 @@ body {
   grid-template-rows: 98vh;
 }
 
-/* #play2disp {
-  background-color: rgb(250, 214, 214);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-end;
-} */
-
 /* -------------------------------------------- */
 
 .sides {
@@ -20,69 +12,70 @@ body {
   align-items: center;
 }
 
-/* add #play2disp here */
-#play1disp {
+#play1disp,
+#play2disp {
   background-color: rgb(151, 174, 250);
   background-image: linear-gradient(
     to bottom right,
     rgb(168, 183, 240),
     rgb(0, 21, 89)
   );
-  margin: 1vh;
-  padding: 1vh;
-  border: 0.6vh solid black;
-  border-radius: 3vh;
+  padding: 3vmin;
+  border-radius: 3vmin;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: space-between;
   font-family: Arial, Helvetica, sans-serif;
-  max-height: 70vh;
+  max-height: 90vmin;
+  margin: 5vmin;
 }
 
-.plyTitle,
-.nameInput,
-.rollBtns,
-.bankDisp,
-.handTitle,
-.handDisp,
-.btnBar {
-  margin: 2vh;
+#play2disp {
+  background-color: rgba(255, 0, 0, 0.571);
+  background-image: linear-gradient(
+    to bottom right,
+    rgb(249, 191, 179),
+    rgb(255, 0, 0)
+  );
 }
 
 .btns {
-  height: 6vh;
+  height: 4vmin;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .btnBar {
   display: flex;
   justify-content: space-between;
+  font-size: 2vmin;
 }
 
 .btns,
-#ply1SubName {
-  background-color: whitesmoke;
+#ply1SubName,
+#ply2SubName {
   color: black;
-  border-radius: 2vh;
-  border-color: rgb(180, 179, 179);
+  border-radius: 0.6vmin;
 }
 
 #ply1Input,
-#ply1SubName {
-  border-radius: 0.6vh;
+#ply1SubName,
+#ply2Input,
+#ply2SubName {
+  border-radius: 0.6vmin;
 }
 
-h1 {
-  font-size: 6.5vh;
+.plyTitle {
+  font-size: 5.5vmin;
 }
 
-h4 {
-  font-size: 3vh;
+.bankDisp,
+.handTitle {
+  font-size: 3.5vmin;
 }
 
-h5 {
-  font-size: 2vh;
+.handDisp {
+  font-size: 2vmin;
 }
 
 .handDisp {
@@ -91,6 +84,15 @@ h5 {
 
 .handTitle {
   margin-bottom: 0;
+}
+
+.rollBtns {
+  margin-top: 2vmin;
+  font-size: 2vmin;
+}
+
+.nameInput {
+  margin-top: 0;
 }
 
 /* -------------------------------------------- */
@@ -140,13 +142,14 @@ h5 {
   background-color: rgb(180, 179, 179);
   background-image: linear-gradient(
     to bottom right,
-    rgb(92, 91, 91),
+    rgb(126, 126, 126),
     rgb(247, 247, 247)
   );
   padding: 0.3vh;
   font-size: 2.5vh;
   border: 0.15vh solid black;
   border-radius: 0.5vh;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 #noticeBox {
