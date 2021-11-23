@@ -39,7 +39,6 @@ a {
   color: black;
   font-size: 3vmin;
   text-decoration: none;
-  max-width: 1vh;
 }
 a:hover {
   color: grey;

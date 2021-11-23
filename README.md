@@ -45,7 +45,7 @@ Final Game Board Screenshot:
 - ~~Write JS OOP to create player classes based on user input~~
 - ~~Write JS OOP to create property classes~~
 - ~~Write JS for rollDice, movePlayer, and offerToBuy functions~~
-- Add a dice display instead of the current alert
+- ~~Add a dice display instead of the current alert~~
 - Add logic for rolling doubles
 - Make house icons appear on the property the user buys them for
 - Make it so the user can only buy a house when they have the monopoly

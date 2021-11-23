@@ -152,14 +152,14 @@ body {
 }
 
 #firstDice {
-  width: 4.5vh;
+  width: 6vh;
   background-image: url('resources/dice1.png');
   background-size: cover;
   margin: 0 1vmin;
   opacity: 0;
 }
 #secDice {
-  width: 4.5vh;
+  width: 6vh;
   background-image: url('resources/dice1.png');
   background-size: cover;
   margin: 0 1vmin;

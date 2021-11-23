@@ -255,7 +255,7 @@ const d2Disp = document.querySelector('#secDice');
 
 let freeParkPot = 0;
 
-let currentPly = null;
+let currentPly = 'p1';
 
 let mortActive = false;
 let unMortActive = false;
@@ -292,12 +292,21 @@ dispHand = (ply) => {
   }
 };
 
+createNotEndTurn = (message) => {
+  notMsg.innerText = message;
+  notBox.style.opacity = 1;
+  clearCardBtn.onclick = () => {
+    notBox.style.opacity = 0;
+    changeTurn();
+  };
+};
+
 createNot = (message) => {
   notMsg.innerText = message;
   notBox.style.opacity = 1;
-  clearCardBtn.addEventListener('click', () => {
+  clearCardBtn.onclick = () => {
     notBox.style.opacity = 0;
-  });
+  };
 };
 
 pauseJumpPos = (ply, newPos) => {
@@ -341,10 +350,12 @@ buyProp = (ply, prop) => {
       noBtn.style.opacity = 0;
       clearCardBtn.style.opacity = 1;
       notBox.style.opacity = 0;
+      changeTurn();
     } else {
       yesBtn.style.opacity = 0;
       noBtn.style.opacity = 0;
       clearCardBtn.style.opacity = 1;
+      changeTurn();
     }
   };
   noBtn.onclick = () => {
@@ -362,9 +373,11 @@ payRent = (curPly, owner, prop) => {
   if (prop.isMort === false) {
     gainMoney(curPly, -1 * prop.rent);
     gainMoney(owner, prop.rent);
-    createNot(`You landed on ${propName}. Pay ${ownerName} $${propRent}.`);
+    createNotEndTurn(
+      `You landed on ${propName}. Pay ${ownerName} $${propRent}.`
+    );
   } else if (prop.isMort === true) {
-    createNot(`You landed on ${propName} but it is mortgaged.`);
+    createNotEndTurn(`You landed on ${propName} but it is mortgaged.`);
   }
 };
 
@@ -377,24 +390,28 @@ checkOwned = (ply) => {
     payRent(ply, owner, property);
   } else if (propIsOwned === false) {
     buyProp(ply, property);
+  } else {
+    createNotEndTurn(
+      `You landed on ${property.name} but you already own it so your stay is free!`
+    );
   }
 };
 
 checkSpc = (ply) => {
   if (ply.curPos === 0) {
-    createNot('You landed on go, collect an extra $100.');
+    createNotEndTurn('You landed on go, collect an extra $100.');
     gainMoney(ply, 100);
   } else if (ply.curPos === 30) {
     createNot('Go directly to jail. Do not pass go. Do not collect $200.');
     pauseJumpPos(ply, 10);
   } else if (ply.curPos === 4) {
-    createNot('You landed on income taxes. Pay $200.');
+    createNotEndTurn('You landed on income taxes. Pay $200.');
     gainMoney(ply, -200);
     freeParkPot += 200;
   } else if (ply.curPos === 10) {
-    createNot('You are just visiting jail.');
+    createNotEndTurn('You are just visiting jail.');
   } else if (ply.curPos === 38) {
-    createNot('You landed on luxury taxes. Pay $75.');
+    createNotEndTurn('You landed on luxury taxes. Pay $75.');
     gainMoney(ply, -75);
     freeParkPot += 75;
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
@@ -404,7 +421,7 @@ checkSpc = (ply) => {
     let randomSpc = Math.floor(Math.random() * 39);
     pauseJumpPos(ply, randomSpc);
   } else if (ply.curPos === 20) {
-    createNot(
+    createNotEndTurn(
       `You landed on Free Parking. Collect the $${freeParkPot} jackpot!`
     );
     gainMoney(ply, freeParkPot);
@@ -414,12 +431,12 @@ checkSpc = (ply) => {
     let randomLoss = Math.ceil(Math.random() * 100);
     let fateDecider = Math.ceil(Math.random() * 2);
     if (fateDecider === 1) {
-      createNot(
+      createNotEndTurn(
         `You landed on Community Chest and today is your lucky day. Collect $${randomGain}!`
       );
       gainMoney(ply, randomGain);
     } else if (fateDecider === 2) {
-      createNot(
+      createNotEndTurn(
         `Uh-oh! You landed on Community Chest and it's empty. Pay $${randomLoss}.`
       );
       gainMoney(ply, -1 * randomLoss);
@@ -435,21 +452,13 @@ rollDice = (ply) => {
   unMortActive = false;
   buyHouseActive = false;
   if (ply === p1) {
-    currentPly = 'p2';
     p1MortBtn.style.opacity = 0;
-    p2MortBtn.style.opacity = 1;
     p1BuyHouseBtn.style.opacity = 0;
-    p2BuyHouseBtn.style.opacity = 1;
     p1UnMortBtn.style.opacity = 0;
-    p2UnMortBtn.style.opacity = 1;
   } else if (ply === p2) {
-    currentPly = 'p1';
     p2MortBtn.style.opacity = 0;
-    p1MortBtn.style.opacity = 1;
     p2BuyHouseBtn.style.opacity = 0;
-    p1BuyHouseBtn.style.opacity = 1;
     p2UnMortBtn.style.opacity = 0;
-    p1UnMortBtn.style.opacity = 1;
   }
   notBox.style.opacity = 0;
   d1Disp.style.opacity = 1;
@@ -482,15 +491,19 @@ rollDice = (ply) => {
   } else if (dice2 === 6) {
     d2Disp.style.backgroundImage = "url('resources/dice6.png')";
   }
-  let roll = dice1 + dice2;
-  // alert(`You rolled a ${dice1} and a ${dice2} for a total of ${roll}`);
-  ply.curPos += roll;
-  if (ply.curPos >= spacesArr.length) {
-    pausePassGo(ply);
-  } else {
-    spacesArr[ply.curPos].appendChild(ply.token);
-    checkSpc(ply);
-  }
+  setTimeout(
+    (finishTurn = () => {
+      let roll = dice1 + dice2;
+      ply.curPos += roll;
+      if (ply.curPos >= spacesArr.length) {
+        pausePassGo(ply);
+      } else {
+        spacesArr[ply.curPos].appendChild(ply.token);
+        checkSpc(ply);
+      }
+    }),
+    1200
+  );
 };
 
 pausePassGo = (ply) => {
@@ -689,7 +702,7 @@ unMortProp2 = () => {
 };
 
 buyHouse1 = () => {
-  createNot('Click on a property to purchase a house for it.');
+  createNot('Player 1, Click on a property to purchase a house for it.');
   const propSpcs = p1.propsOwnedSpcs;
   const propObjs = p1.propsOwnedObjs;
   for (let i = 0; i < propSpcs.length; i++) {
@@ -736,7 +749,7 @@ buyHouse1 = () => {
   }
 };
 buyHouse2 = () => {
-  createNot('Click on a property to purchase a house for it.');
+  createNot('Player 2, Click on a property to purchase a house for it.');
   const propSpcs = p2.propsOwnedSpcs;
   const propObjs = p2.propsOwnedObjs;
   for (let i = 0; i < propSpcs.length; i++) {
@@ -783,18 +796,45 @@ buyHouse2 = () => {
   }
 };
 
+changeTurn = () => {
+  if (currentPly === 'p1') {
+    currentPly = 'p2';
+    rollBtn2.style.opacity = 1;
+    p2MortBtn.style.opacity = 1;
+    p2BuyHouseBtn.style.opacity = 1;
+    p2UnMortBtn.style.opacity = 1;
+  } else if (currentPly === 'p2') {
+    currentPly = 'p1';
+    rollBtn1.style.opacity = 1;
+    p1MortBtn.style.opacity = 1;
+    p1BuyHouseBtn.style.opacity = 1;
+    p1UnMortBtn.style.opacity = 1;
+  }
+};
+
 //////////////////////
 
 // Click Events Here:
 rollBtn1.addEventListener('click', () => {
   rollDice(p1);
   rollBtn1.style.opacity = 0;
-  rollBtn2.style.opacity = 1;
+  // setTimeout(
+  //   (rollBtnApp = () => {
+  //     rollBtn2.style.opacity = 1;
+  //   }),
+  //   2000
+  // );
 });
+
 rollBtn2.addEventListener('click', () => {
   rollDice(p2);
   rollBtn2.style.opacity = 0;
-  rollBtn1.style.opacity = 1;
+  // setTimeout(
+  //   (rollBtnApp = () => {
+  //     rollBtn1.style.opacity = 1;
+  //   }),
+  //   2000
+  // );
 });
 
 ply1NameBtn.addEventListener('click', () => {
