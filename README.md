@@ -20,7 +20,7 @@ This is a browser-based Monopoly Program written in JavaScript which I coded two
 
 #### [Trello Board](https://trello.com/b/yI0quoOg/monopoly-build)
 
-<!-- #### [Play on Surge]() -->
+#### [Play on Surge](grantopoly.surge.sh/)
 
 ---
 
