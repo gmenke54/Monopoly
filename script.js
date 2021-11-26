@@ -308,6 +308,7 @@ dispHand = (ply) => {
 createNotEndTurn = (message) => {
   notMsg.innerText = message;
   notBox.style.opacity = 1;
+  clearCardBtn.style.opacity = 1;
   clearCardBtn.onclick = () => {
     notBox.style.opacity = 0;
     changeTurn();
@@ -354,7 +355,7 @@ buyProp = (ply, prop) => {
   const propCost = prop.cost;
   if (checkMoney(ply, propCost) === false) {
     createNotEndTurn(
-      `${propName} only costs ${propCost} but you are too poor to buy it.`
+      `${propName} only costs $${propCost} but you are too poor to buy it.`
     );
   } else {
     notMsg.innerText = `${ply.persName} landed on ${propName} which costs $${propCost}. Would you like to purchase ${propName}?`;
@@ -436,6 +437,7 @@ checkSpc = (ply) => {
     gainMoney(ply, 100);
   } else if (ply.curPos === 30) {
     createTempNot('Go directly to jail. Do not pass go. Do not collect $200.');
+    rollDoubles = false;
     pauseJumpPos(ply, 10);
   } else if (ply.curPos === 4) {
     createNotEndTurn(`${ply.persName} landed on income taxes. Pay $200.`);
@@ -786,6 +788,13 @@ buyHouse1 = () => {
               gainMoney(p1, -1 * propObjs[i].houseCost);
               p1.totVal += propObjs[i].houseCost / 2;
               dispVal(p1);
+              const img = document.createElement('img');
+              img.src = 'resources/house.png';
+              img.style.width = '1.3vh';
+              propSpcs[i].appendChild(img);
+              propSpcs[i].style.display = 'flex';
+              propSpcs[i].style.flexWrap = 'wrap';
+              propSpcs[i].style.alignItems = 'flex-start';
             }
           }
         }
@@ -836,6 +845,13 @@ buyHouse2 = () => {
               gainMoney(p2, -1 * propObjs[i].houseCost);
               p2.totVal += propObjs[i].houseCost / 2;
               dispVal(p2);
+              const img = document.createElement('img');
+              img.src = 'resources/house.png';
+              img.style.width = '1.3vh';
+              propSpcs[i].appendChild(img);
+              propSpcs[i].style.display = 'flex';
+              propSpcs[i].style.flexWrap = 'wrap';
+              propSpcs[i].style.alignItems = 'flex-start';
             }
           }
         }

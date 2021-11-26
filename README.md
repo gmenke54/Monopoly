@@ -48,8 +48,8 @@ Final Game Board Screenshot:
 - ~~Write JS OOP to create property classes~~
 - ~~Write JS for rollDice, movePlayer, and offerToBuy functions~~
 - ~~Add a dice display instead of the current alert~~
-- Add logic for rolling doubles
-- Make house icons appear on the property the user buys them for
+- ~~Add logic for rolling doubles~~
+- ~~Make house icons appear on the property the user buys them for~~
 - Make it so the user can only buy a house when they have the monopoly
 - Add trading functionality
 - Add a make auction function
@@ -77,6 +77,8 @@ Final Game Board Screenshot:
 **Monopoly Title Image:** [DuckDuckGo](https://duckduckgo.com/?t=hc&va=b)
 
 **Monopoly Tile Images for Gameboard:** [Pixabay](https://pixabay.com/illustrations/monopoly-game-board-game-fun-1984400/)
+
+**House Images:** [Pixabay](https://pixabay.com/vectors/house-icon-home-symbol-sign-308936/)
 
 **Dice Images** [Pixabay](https://pixabay.com/vectors/dice-games-game-six-sided-face-26772/)
 
