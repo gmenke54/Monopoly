@@ -257,6 +257,8 @@ const d2Disp = document.querySelector('#secDice');
 
 let freeParkPot = 0;
 
+let rollDoubles = false;
+
 let currentPly = 'p1';
 
 let mortActive = false;
@@ -505,6 +507,9 @@ rollDice = (ply) => {
     d2Disp.style.backgroundImage = "url('resources/dice5.png')";
   } else if (dice2 === 6) {
     d2Disp.style.backgroundImage = "url('resources/dice6.png')";
+  }
+  if (dice1 === dice2) {
+    rollDoubles = true;
   }
   setTimeout(
     (finishTurn = () => {
@@ -824,18 +829,37 @@ buyHouse2 = () => {
 };
 
 changeTurn = () => {
-  if (currentPly === 'p1') {
-    currentPly = 'p2';
-    rollBtn2.style.opacity = 1;
-    p2MortBtn.style.opacity = 1;
-    p2BuyHouseBtn.style.opacity = 1;
-    p2UnMortBtn.style.opacity = 1;
-  } else if (currentPly === 'p2') {
-    currentPly = 'p1';
-    rollBtn1.style.opacity = 1;
-    p1MortBtn.style.opacity = 1;
-    p1BuyHouseBtn.style.opacity = 1;
-    p1UnMortBtn.style.opacity = 1;
+  if (rollDoubles === true) {
+    createNot('You rolled doubles so you get to go again!');
+    if (currentPly === 'p2') {
+      currentPly = 'p2';
+      rollBtn2.style.opacity = 1;
+      p2MortBtn.style.opacity = 1;
+      p2BuyHouseBtn.style.opacity = 1;
+      p2UnMortBtn.style.opacity = 1;
+      rollDoubles = false;
+    } else if (currentPly === 'p1') {
+      currentPly = 'p1';
+      rollBtn1.style.opacity = 1;
+      p1MortBtn.style.opacity = 1;
+      p1BuyHouseBtn.style.opacity = 1;
+      p1UnMortBtn.style.opacity = 1;
+      rollDoubles = false;
+    }
+  } else {
+    if (currentPly === 'p1') {
+      currentPly = 'p2';
+      rollBtn2.style.opacity = 1;
+      p2MortBtn.style.opacity = 1;
+      p2BuyHouseBtn.style.opacity = 1;
+      p2UnMortBtn.style.opacity = 1;
+    } else if (currentPly === 'p2') {
+      currentPly = 'p1';
+      rollBtn1.style.opacity = 1;
+      p1MortBtn.style.opacity = 1;
+      p1BuyHouseBtn.style.opacity = 1;
+      p1UnMortBtn.style.opacity = 1;
+    }
   }
 };
 
