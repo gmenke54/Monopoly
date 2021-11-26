@@ -102,7 +102,7 @@ const ply2NameBtn = document.getElementById('ply2SubName');
 let p2NameInput = document.getElementById('ply2Input').value;
 
 class player {
-  constructor(tokenNum, persName) {
+  constructor(tokenNum, persName, color) {
     this.persName = persName;
     this.token = tokenNum;
     this.curPos = 0;
@@ -112,12 +112,13 @@ class player {
     this.propsOwnedObjs = [];
     this.totPropsVal = 0;
     this.totVal = 1500;
+    this.color = color;
     this.jailCount = 0;
     this.doublesCount = 0;
   }
 }
-let p1 = new player(token1, 'Player1');
-let p2 = new player(token2, 'Player2');
+let p1 = new player(token1, 'Player1', '#3559E4');
+let p2 = new player(token2, 'Player2', '#FD4B46');
 
 class colProperty {
   constructor(name, cost, spaceNum, houseCost) {
@@ -360,6 +361,8 @@ buyProp = (ply, prop) => {
       dispHand(ply);
       prop.isOwned = true;
       prop.owner = ply;
+      prop.spc.style.borderWidth = '0.4vh';
+      prop.spc.style.borderColor = ply.color;
       yesBtn.style.opacity = 0;
       noBtn.style.opacity = 0;
       clearCardBtn.style.opacity = 1;
