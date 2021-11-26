@@ -317,9 +317,16 @@ createNotEndTurn = (message) => {
 createNot = (message) => {
   notMsg.innerText = message;
   notBox.style.opacity = 1;
+  clearCardBtn.style.opacity = 1;
   clearCardBtn.onclick = () => {
     notBox.style.opacity = 0;
   };
+};
+
+createTempNot = (message) => {
+  notMsg.innerText = message;
+  notBox.style.opacity = 1;
+  clearCardBtn.style.opacity = 0;
 };
 
 pauseJumpPos = (ply, newPos) => {
@@ -345,43 +352,49 @@ gainMoney = (ply, amtGain) => {
 buyProp = (ply, prop) => {
   const propName = prop.name;
   const propCost = prop.cost;
-  notMsg.innerText = `${ply.persName} landed on ${propName} which costs $${propCost}. Would you like to purchase ${propName}?`;
-  notBox.style.opacity = 1;
-  yesBtn.style.opacity = 1;
-  noBtn.style.opacity = 1;
-  clearCardBtn.style.opacity = 0;
-  yesBtn.onclick = () => {
-    if (checkMoney(ply, propCost) === true) {
-      gainMoney(ply, -1 * prop.cost);
-      ply.totVal += prop.cost / 2;
-      dispVal(ply);
-      ply.propsOwned.push(prop.name);
-      ply.propsOwnedSpcs.push(prop.spc);
-      ply.propsOwnedObjs.push(prop);
-      dispHand(ply);
-      prop.isOwned = true;
-      prop.owner = ply;
-      prop.spc.style.borderWidth = '0.4vh';
-      prop.spc.style.borderColor = ply.color;
-      yesBtn.style.opacity = 0;
-      noBtn.style.opacity = 0;
-      clearCardBtn.style.opacity = 1;
+  if (checkMoney(ply, propCost) === false) {
+    createNotEndTurn(
+      `${propName} only costs ${propCost} but you are too poor to buy it.`
+    );
+  } else {
+    notMsg.innerText = `${ply.persName} landed on ${propName} which costs $${propCost}. Would you like to purchase ${propName}?`;
+    notBox.style.opacity = 1;
+    yesBtn.style.opacity = 1;
+    noBtn.style.opacity = 1;
+    clearCardBtn.style.opacity = 0;
+    yesBtn.onclick = () => {
+      if (checkMoney(ply, propCost) === true) {
+        gainMoney(ply, -1 * prop.cost);
+        ply.totVal += prop.cost / 2;
+        dispVal(ply);
+        ply.propsOwned.push(prop.name);
+        ply.propsOwnedSpcs.push(prop.spc);
+        ply.propsOwnedObjs.push(prop);
+        dispHand(ply);
+        prop.isOwned = true;
+        prop.owner = ply;
+        prop.spc.style.borderWidth = '0.4vh';
+        prop.spc.style.borderColor = ply.color;
+        yesBtn.style.opacity = 0;
+        noBtn.style.opacity = 0;
+        clearCardBtn.style.opacity = 1;
+        notBox.style.opacity = 0;
+        changeTurn();
+      } else {
+        yesBtn.style.opacity = 0;
+        noBtn.style.opacity = 0;
+        clearCardBtn.style.opacity = 1;
+        changeTurn();
+      }
+    };
+    noBtn.onclick = () => {
       notBox.style.opacity = 0;
-      changeTurn();
-    } else {
       yesBtn.style.opacity = 0;
       noBtn.style.opacity = 0;
       clearCardBtn.style.opacity = 1;
       changeTurn();
-    }
-  };
-  noBtn.onclick = () => {
-    notBox.style.opacity = 0;
-    yesBtn.style.opacity = 0;
-    noBtn.style.opacity = 0;
-    clearCardBtn.style.opacity = 1;
-    changeTurn();
-  };
+    };
+  }
 };
 
 payRent = (curPly, owner, prop) => {
@@ -422,7 +435,7 @@ checkSpc = (ply) => {
     createNotEndTurn(`${ply.persName} landed on go, collect an extra $100.`);
     gainMoney(ply, 100);
   } else if (ply.curPos === 30) {
-    createNot('Go directly to jail. Do not pass go. Do not collect $200.');
+    createTempNot('Go directly to jail. Do not pass go. Do not collect $200.');
     pauseJumpPos(ply, 10);
   } else if (ply.curPos === 4) {
     createNotEndTurn(`${ply.persName} landed on income taxes. Pay $200.`);
@@ -435,7 +448,7 @@ checkSpc = (ply) => {
     gainMoney(ply, -75);
     freeParkPot += 75;
   } else if (ply.curPos === 7 || ply.curPos === 22 || ply.curPos === 36) {
-    createNot(
+    createTempNot(
       `${ply.persName} landed on a chance space. You will now jump to a random space on the board. Good luck!`
     );
     let randomSpc = Math.floor(Math.random() * 39);
@@ -532,7 +545,7 @@ rollDice = (ply) => {
 pausePassGo = (ply) => {
   ply.curPos -= 40;
   spacesArr[ply.curPos].appendChild(ply.token);
-  createNot('You passed Go. Collect $200.');
+  createTempNot('You passed Go. Collect $200.');
   gainMoney(ply, 200);
   setTimeout(
     (passGo = () => {
