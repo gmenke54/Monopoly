@@ -4,7 +4,7 @@
 
 ### 11/23/2021
 
-#### [GitHub](https://github.com/gmenke54) | [LinkedIn](https://www.linkedin.com/in/grant-menke-b81490223/)
+#### [GitHub](https://github.com/gmenke54) | [LinkedIn](https://www.linkedin.com/in/grant-menke-b81490223/) | #### [Deployed](https://grantopoly.surge.sh/)
 
 ---
 
@@ -19,8 +19,6 @@ A JavaScript Monopoly Clone
 This is a browser-based Monopoly Program written in JavaScript which I coded two weeks after being introduced to HTML, CSS, and JavaScript.
 
 #### [Trello Board](https://trello.com/b/yI0quoOg/monopoly-build)
-
-#### [Play on Surge](grantopoly.surge.sh/)
 
 ---
 
