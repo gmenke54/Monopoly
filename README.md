@@ -4,7 +4,7 @@
 
 ### 11/23/2021
 
-#### [GitHub](https://github.com/gmenke54) | [LinkedIn](https://www.linkedin.com/in/grant-menke-b81490223/) | #### [Deployed](https://grantopoly.surge.sh/)
+#### [GitHub](https://github.com/gmenke54) | [LinkedIn](https://www.linkedin.com/in/grant-menke-b81490223/) | [Deployed](https://grantopoly.surge.sh/)
 
 ---
 
